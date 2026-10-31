@@ -38,7 +38,8 @@ export function contrastLine(dish: Dish, tired: string[], dishes: readonly Dish[
   const familiarShape = pool.some((other) => other.format === dish.format);
 
   if (distance === 0) {
-    if (comparison) return `${comparison} than most of what you've been eating, from a new kitchen.`;
+    if (comparison)
+      return `${comparison} than most of what you've been eating, from a new kitchen.`;
     return familiarShape
       ? 'Same part of the map, different kitchen.'
       : 'Same part of the map, but a different kind of dish entirely.';

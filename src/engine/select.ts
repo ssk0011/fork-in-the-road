@@ -130,8 +130,7 @@ export function proposeNext(
 
 // Soft constraints stop being filters here but still push worse matches down.
 export function finalPicks(session: Session, dishes: readonly Dish[]): Dish[] {
-  const rank = (dish: Dish) =>
-    score(dish, session, dishes) - 0.25 * softViolations(dish, session);
+  const rank = (dish: Dish) => score(dish, session, dishes) - 0.25 * softViolations(dish, session);
   return dishes
     .filter((dish) => passesHardFilters(dish, session))
     .sort((a, b) => rank(b) - rank(a) || a.id.localeCompare(b.id))
