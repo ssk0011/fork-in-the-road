@@ -98,7 +98,7 @@ export function Setup({
       ) : step === 1 ? (
         <main className="screen" key="restrictions">
           <ScreenHeading className="question">Anything you can't eat?</ScreenHeading>
-          <p className="lede">I'll never suggest a dish that usually breaks these.</p>
+          <p className="lede">I'll skip dishes that usually include these.</p>
           <div className="chips" role="group" aria-label="Dietary restrictions">
             {RESTRICTIONS.map((item) => (
               <button
