@@ -2,6 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
 async function answerQuestions(page: Page) {
+  await page.getByRole('button', { name: 'Nothing to avoid' }).click();
   await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
   await page.getByRole('radio', { name: /^\$\$\$/ }).click();
   await page.getByRole('radio', { name: /Fresh territory/ }).click();
@@ -119,6 +120,7 @@ test('a double tap answers only one question', async ({ page }) => {
   await page.goto('./');
   await page.getByRole('button', { name: 'Thai', exact: true }).click();
   await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Nothing to avoid' }).click();
   await page.getByRole('radio', { name: 'Hungry', exact: true }).dblclick();
   await expect(page.getByRole('heading', { name: 'Budget?' })).toBeVisible();
 });
@@ -133,6 +135,24 @@ test('actions stay on screen at 320 by 568', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Not this' })).toBeInViewport();
 });
 
+test('a restriction removes dishes and shows the check-with-restaurant note', async ({ page }) => {
+  await page.goto('./');
+  await page.getByRole('button', { name: 'Indian', exact: true }).click();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Vegan' }).click();
+  await expect(page.getByText('Recipes vary').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
+  await page.getByRole('radio', { name: /^\$\$\$/ }).click();
+  await page.getByRole('radio', { name: /Fresh territory/ }).click();
+  await expect(page.getByText('Recipes vary')).toBeVisible();
+  for (let count = 0; count < 5; count += 1) {
+    expect(await dishName(page)).not.toMatch(/Chicken|Beef|Pork|Lamb|Duck/);
+    await sayNo(page, 'Just not feeling it');
+  }
+  await expect(page.getByText('Recipes vary')).toBeVisible();
+});
+
 test('survives corrupt saved data', async ({ page }) => {
   await page.goto('./');
   await page.evaluate(() => localStorage.setItem('fork-in-the-road', '{broken'));
@@ -143,6 +163,10 @@ test('survives corrupt saved data', async ({ page }) => {
 test('the whole flow works from the keyboard', async ({ page }) => {
   await page.goto('./');
   await page.getByRole('button', { name: 'Thai', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await page.getByRole('button', { name: 'Next' }).focus();
+  await page.keyboard.press('Enter');
+  await page.getByRole('button', { name: 'No gluten' }).focus();
   await page.keyboard.press('Enter');
   await page.getByRole('button', { name: 'Next' }).focus();
   await page.keyboard.press('Enter');

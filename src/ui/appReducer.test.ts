@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { DISHES } from '../data/dishes';
 import { appReducer, initialState, type AppState } from './appReducer';
 
-const settings = { tired: ['Indian'], hunger: 3, budget: 3, adventure: 2 };
+const settings = { tired: ['Indian'], restrictions: [], hunger: 3, budget: 3, adventure: 2 };
 
 function started(seed = 1): AppState {
   return appReducer(initialState(settings), { type: 'start', recentlyAccepted: [], seed });
@@ -43,7 +43,7 @@ describe('appReducer', () => {
   it('back from the first dish returns to the last question', () => {
     const back = appReducer(started(), { type: 'back' });
     expect(back.screen).toBe('setup');
-    expect(back.step).toBe(3);
+    expect(back.step).toBe(4);
   });
 
   it('back from yes returns to where the dish was chosen', () => {

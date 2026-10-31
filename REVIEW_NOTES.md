@@ -39,4 +39,6 @@ The reviews ran before the fixes below. Nobody re-reviewed the fixes independent
 
 ## Not verified
 
+- Dietary restrictions were added after the independent reviews, so they've had tests but no independent review.
+
 - The repeat-tap guard and sticky actions were tested in desktop Chromium only, not on a real phone or in Safari.

@@ -1,5 +1,5 @@
 import { CUISINES, MAX_TIRED } from '../data/cuisines';
-import type { Settings } from '../engine/types';
+import { RESTRICTIONS, type Settings } from '../engine';
 
 const KEY = 'fork-in-the-road';
 const VERSION = 1;
@@ -33,7 +33,16 @@ function parseSettings(value: unknown): Settings | null {
   if (!inRange(hunger, 5) || !inRange(budget, 3) || !inRange(adventure, 3)) return null;
   const known: readonly string[] = CUISINES;
   const tired = value.tired.filter((item): item is string => known.includes(item as string));
-  return { tired: [...new Set(tired)].slice(0, MAX_TIRED), hunger, budget, adventure };
+  const allowed: readonly string[] = RESTRICTIONS.map((item) => item.id);
+  const saved: unknown[] = Array.isArray(value.restrictions) ? value.restrictions : [];
+  const restrictions = saved.filter((item): item is string => allowed.includes(item as string));
+  return {
+    tired: [...new Set(tired)].slice(0, MAX_TIRED),
+    restrictions: [...new Set(restrictions)],
+    hunger,
+    budget,
+    adventure,
+  };
 }
 
 function parseAccepted(value: unknown): AcceptedDish[] {

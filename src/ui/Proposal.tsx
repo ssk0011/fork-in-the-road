@@ -9,7 +9,7 @@ import {
   type Session,
 } from '../engine';
 import { Header, RoadProgress, ScreenHeading } from './components';
-import { attributeChips, counterLine, dishProgress, origin } from './copy';
+import { attributeChips, CHECK_WITH_RESTAURANT, counterLine, dishProgress, origin } from './copy';
 
 function ReasonSheet({
   dish,
@@ -101,6 +101,7 @@ export function Proposal({
           <p className="dish-origin">{origin(dish)}</p>
           <p className="dish-blurb">{dish.blurb}</p>
           <p className="dish-contrast">{contrastLine(dish, session.tired, DISHES)}</p>
+          {session.restrictions.length > 0 && <p className="check-note">{CHECK_WITH_RESTAURANT}</p>}
           <ul className="attributes" aria-label="About this dish">
             {attributeChips(dish).map((chip) => (
               <li key={chip}>{chip}</li>

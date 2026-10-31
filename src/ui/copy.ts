@@ -32,6 +32,9 @@ export function rutLine(tired: string[]): string {
   return "Let's get you out of the rut.";
 }
 
+export const CHECK_WITH_RESTAURANT =
+  'Recipes vary, so always ask the restaurant, especially about allergies.';
+
 export function questionProgress(step: number): string {
   return `Question ${step + 1} of ${SETUP_STEPS}`;
 }

@@ -1,16 +1,18 @@
 import type { Dish } from '../engine';
 import { Header, ScreenHeading } from './components';
-import { origin } from './copy';
+import { CHECK_WITH_RESTAURANT, origin } from './copy';
 import { mapsUrl, recipeUrl } from './links';
 
 export function YesScreen({
   dish,
   storageFailed,
+  restricted,
   onBack,
   onStartOver,
 }: {
   dish: Dish;
   storageFailed: boolean;
+  restricted: boolean;
   onBack: () => void;
   onStartOver: () => void;
 }) {
@@ -23,6 +25,7 @@ export function YesScreen({
           <ScreenHeading className="dish-name">{dish.name}</ScreenHeading>
           <p className="dish-origin">{origin(dish)}</p>
           <p className="dish-blurb">{dish.blurb}</p>
+          {restricted && <p className="check-note">{CHECK_WITH_RESTAURANT}</p>}
           {storageFailed && (
             <p className="hint">This browser is blocking storage, so this pick won't be saved.</p>
           )}
@@ -55,11 +58,13 @@ export function YesScreen({
 
 export function FinalPick({
   picks,
+  restricted,
   onPick,
   onBack,
   onStartOver,
 }: {
   picks: Dish[];
+  restricted: boolean;
   onPick: (dish: Dish) => void;
   onBack: () => void;
   onStartOver: () => void;
@@ -74,6 +79,7 @@ export function FinalPick({
               Okay, I'll stop making you work for it.
             </ScreenHeading>
             <p className="lede">Here's the best of what's left. Pick one.</p>
+            {restricted && <p className="check-note">{CHECK_WITH_RESTAURANT}</p>}
             <ul className="picks">
               {picks.map((dish) => (
                 <li key={dish.id}>
@@ -90,7 +96,8 @@ export function FinalPick({
           <>
             <ScreenHeading className="question">I've run out of road.</ScreenHeading>
             <p className="lede">
-              Nothing fits those answers. Start over with fewer tired cuisines or a bigger budget.
+              Nothing fits those answers. Start over with fewer tired cuisines, fewer restrictions
+              or a bigger budget.
             </p>
           </>
         )}

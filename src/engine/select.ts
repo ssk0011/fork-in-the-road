@@ -1,4 +1,5 @@
 import { novelty } from './novelty';
+import { fitsRestrictions } from './restrictions';
 import { createRng } from './rng';
 import type { Constraints, Dish, Session, Settings } from './types';
 
@@ -50,6 +51,7 @@ function passesHardFilters(dish: Dish, session: Session): boolean {
     !session.rejected.has(dish.id) &&
     !session.recentlyAccepted.includes(dish.id) &&
     !session.tired.includes(dish.cuisine) &&
+    fitsRestrictions(dish, session.restrictions) &&
     dish.price <= session.budget
   );
 }

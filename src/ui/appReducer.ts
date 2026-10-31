@@ -10,9 +10,15 @@ import {
   type Settings,
 } from '../engine';
 
-export const SETUP_STEPS = 4;
+export const SETUP_STEPS = 5;
 // 0 means not answered yet, so no option starts out looking chosen.
-const DEFAULT_SETTINGS: Settings = { tired: [], hunger: 0, budget: 0, adventure: 0 };
+const DEFAULT_SETTINGS: Settings = {
+  tired: [],
+  restrictions: [],
+  hunger: 0,
+  budget: 0,
+  adventure: 0,
+};
 
 export type Field = 'hunger' | 'budget' | 'adventure';
 
@@ -31,6 +37,7 @@ export type AppState = {
 
 export type Action =
   | { type: 'toggle-tired'; cuisine: string }
+  | { type: 'toggle-restriction'; id: string }
   | { type: 'answer'; field: Field; value: number }
   | { type: 'next-step' }
   | { type: 'start'; recentlyAccepted: string[]; seed: number }
@@ -95,6 +102,13 @@ export function appReducer(state: AppState, action: Action): AppState {
         ...state,
         settings: { ...state.settings, tired: [...tired, action.cuisine] },
       };
+    }
+    case 'toggle-restriction': {
+      const { restrictions } = state.settings;
+      const next = restrictions.includes(action.id)
+        ? restrictions.filter((id) => id !== action.id)
+        : [...restrictions, action.id];
+      return { ...state, settings: { ...state.settings, restrictions: next } };
     }
     case 'answer':
       return {

@@ -86,6 +86,7 @@ export function App() {
             storageFailed={storageFailed}
             hasSavedData={loadStore().settings !== null}
             onToggleTired={(cuisine) => dispatch({ type: 'toggle-tired', cuisine })}
+            onToggleRestriction={(id) => dispatch({ type: 'toggle-restriction', id })}
             onAnswer={(field, value) => dispatch({ type: 'answer', field, value })}
             onNext={() => dispatch({ type: 'next-step' })}
             onStart={(settings) => {
@@ -114,6 +115,7 @@ export function App() {
           <YesScreen
             dish={state.dish}
             storageFailed={storageFailed}
+            restricted={state.settings.restrictions.length > 0}
             onBack={() => state.dish && backFromYes(state.dish)}
             onStartOver={startOver}
           />
@@ -121,6 +123,7 @@ export function App() {
         {state.screen === 'final' && state.session && (
           <FinalPick
             picks={finalPicks(state.session, DISHES)}
+            restricted={state.settings.restrictions.length > 0}
             onPick={accept}
             onBack={back}
             onStartOver={startOver}

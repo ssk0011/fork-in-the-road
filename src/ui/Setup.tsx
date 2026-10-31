@@ -1,9 +1,12 @@
+import { RESTRICTIONS } from '../engine';
 import { CUISINES } from '../data/cuisines';
 import type { Settings } from '../engine';
 import { MAX_TIRED } from '../data/cuisines';
 import { SETUP_STEPS, type Field } from './appReducer';
 import { Header, RadioButtons, RoadProgress, ScreenHeading, type RadioOption } from './components';
-import { questionProgress, rutLine } from './copy';
+import { CHECK_WITH_RESTAURANT, questionProgress, rutLine } from './copy';
+
+const FIRST_ONE_TAP_STEP = 2;
 
 const QUESTIONS: { field: Field; title: string; options: RadioOption[] }[] = [
   {
@@ -43,6 +46,7 @@ export function Setup({
   storageFailed,
   hasSavedData,
   onToggleTired,
+  onToggleRestriction,
   onAnswer,
   onNext,
   onStart,
@@ -55,6 +59,7 @@ export function Setup({
   storageFailed: boolean;
   hasSavedData: boolean;
   onToggleTired: (cuisine: string) => void;
+  onToggleRestriction: (id: string) => void;
   onAnswer: (field: Field, value: number) => void;
   onNext: () => void;
   onStart: (settings: Settings) => void;
@@ -62,7 +67,7 @@ export function Setup({
   onStartOver: () => void;
   onClearData: () => void;
 }) {
-  const question = QUESTIONS[step - 1];
+  const question = QUESTIONS[step - FIRST_ONE_TAP_STEP];
   const atLimit = settings.tired.length >= MAX_TIRED;
 
   return (
@@ -89,6 +94,32 @@ export function Setup({
               else onNext();
             }}
           />
+        </main>
+      ) : step === 1 ? (
+        <main className="screen" key="restrictions">
+          <ScreenHeading className="question">Anything you can't eat?</ScreenHeading>
+          <p className="lede">I'll never suggest a dish that usually breaks these.</p>
+          <div className="chips" role="group" aria-label="Dietary restrictions">
+            {RESTRICTIONS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="chip"
+                aria-pressed={settings.restrictions.includes(item.id)}
+                onClick={() => onToggleRestriction(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+          {settings.restrictions.length > 0 && (
+            <p className="check-note">{CHECK_WITH_RESTAURANT}</p>
+          )}
+          <div className="actions">
+            <button type="button" className="button button-primary" onClick={onNext}>
+              {settings.restrictions.length > 0 ? 'Next' : 'Nothing to avoid'}
+            </button>
+          </div>
         </main>
       ) : (
         <main className="screen" key="tired">

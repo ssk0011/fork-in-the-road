@@ -24,6 +24,22 @@ export type Format =
 
 export type Texture = 'crunchy' | 'creamy' | 'chewy' | 'brothy' | 'tender' | 'fresh';
 
+// What a typical restaurant version usually contains, including hidden ingredients
+// such as fish sauce or soy sauce. Deliberately cautious.
+export type ContainsTag =
+  | 'pork'
+  | 'beef'
+  | 'meat'
+  | 'poultry'
+  | 'fish'
+  | 'shellfish'
+  | 'egg'
+  | 'dairy'
+  | 'gluten'
+  | 'peanut'
+  | 'tree-nut'
+  | 'alcohol';
+
 export type Dish = {
   id: string;
   name: string;
@@ -39,10 +55,12 @@ export type Dish = {
   mainIngredient: string;
   texture: Texture;
   searchName: string;
+  contains: ContainsTag[];
 };
 
 export type Settings = {
   tired: string[];
+  restrictions: string[];
   hunger: number; // 1-5
   budget: number; // 1-3
   adventure: number; // 1-3

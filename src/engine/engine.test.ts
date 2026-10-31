@@ -29,11 +29,18 @@ function dish(id: string, overrides: Partial<Dish> = {}): Dish {
     mainIngredient: `ingredient-${id}`,
     texture: 'tender',
     searchName: id,
+    contains: [],
     ...overrides,
   };
 }
 
-const settings: Settings = { tired: ['Indian'], hunger: 3, budget: 3, adventure: 2 };
+const settings: Settings = {
+  tired: ['Indian'],
+  restrictions: [],
+  hunger: 3,
+  budget: 3,
+  adventure: 2,
+};
 const tiredDish = dish('tired', {
   cuisine: 'Indian',
   region: 'south-asia',
@@ -73,6 +80,35 @@ describe('hard filters', () => {
     const dishes = [dish('near', { size: 4 }), dish('far', { size: 5 })];
     expect(ids(candidates(session(), dishes))).toEqual(['near']);
     expect(ids(candidates(session({ consecutiveNos: 3 }), dishes))).toEqual(['near', 'far']);
+  });
+});
+
+describe('dietary restrictions', () => {
+  const pork = dish('pork', { contains: ['pork'] });
+  const egg = dish('egg', { contains: ['egg'] });
+  const plain = dish('plain');
+
+  it('removes dishes containing a restricted ingredient', () => {
+    expect(ids(candidates(session({ restrictions: ['vegetarian'] }), [pork, egg, plain]))).toEqual([
+      'egg',
+      'plain',
+    ]);
+    expect(ids(candidates(session({ restrictions: ['vegan'] }), [pork, egg, plain]))).toEqual([
+      'plain',
+    ]);
+  });
+
+  it('combines restrictions', () => {
+    const current = session({ restrictions: ['no-beef', 'no-gluten'] });
+    const dishes = [dish('beef', { contains: ['beef'] }), dish('wheat', { contains: ['gluten'] })];
+    expect(candidates(current, [...dishes, plain])).toEqual([plain]);
+  });
+
+  it('is never relaxed for the final pick', () => {
+    const current = session({ restrictions: ['vegetarian'], hunger: 1 });
+    const huge = dish('huge', { size: 5 });
+    expect(candidates(current, [pork, huge])).toEqual([]);
+    expect(ids(finalPicks(current, [pork, huge]))).toEqual(['huge']);
   });
 });
 
