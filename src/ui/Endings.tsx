@@ -5,10 +5,12 @@ import { mapsUrl, recipeUrl } from './links';
 
 export function YesScreen({
   dish,
+  storageFailed,
   onBack,
   onStartOver,
 }: {
   dish: Dish;
+  storageFailed: boolean;
   onBack: () => void;
   onStartOver: () => void;
 }) {
@@ -20,6 +22,10 @@ export function YesScreen({
           <p className="counter">Good call. Go get it.</p>
           <ScreenHeading className="dish-name">{dish.name}</ScreenHeading>
           <p className="dish-origin">{origin(dish)}</p>
+          <p className="dish-blurb">{dish.blurb}</p>
+          {storageFailed && (
+            <p className="hint">This browser is blocking storage, so this pick won't be saved.</p>
+          )}
         </div>
         <div className="actions">
           <a

@@ -11,7 +11,8 @@ import {
 
 export const SETUP_STEPS = 4;
 export const MAX_TIRED = 4;
-export const DEFAULT_SETTINGS: Settings = { tired: [], hunger: 3, budget: 2, adventure: 2 };
+// 0 means not answered yet, so no option starts out looking chosen.
+export const DEFAULT_SETTINGS: Settings = { tired: [], hunger: 0, budget: 0, adventure: 0 };
 
 type Snapshot = { session: Session; dish: Dish };
 

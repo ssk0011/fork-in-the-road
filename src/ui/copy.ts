@@ -4,12 +4,12 @@ const REGION_NAMES: Record<Region, string> = {
   'south-asia': 'South Asia',
   'southeast-asia': 'Southeast Asia',
   'east-asia': 'East Asia',
-  'middle-east': 'the Middle East',
-  mediterranean: 'the Mediterranean',
-  'caucasus-eastern-europe': 'the Caucasus',
+  'middle-east': 'Middle East',
+  mediterranean: 'Mediterranean',
+  'caucasus-eastern-europe': 'Caucasus',
   africa: 'Africa',
   'latin-america': 'Latin America',
-  caribbean: 'the Caribbean',
+  caribbean: 'Caribbean',
   'north-america': 'North America',
 };
 
@@ -22,7 +22,7 @@ const COUNTER_LINES = [
 ];
 
 const HEAT = ['No heat', 'A little heat', 'Some heat', 'Hot', 'Very hot'];
-const RICHNESS = ['Very light', 'Light', 'Medium', 'Rich', 'Very rich'];
+const RICHNESS = ['Very light', 'Light', 'Medium richness', 'Rich', 'Very rich'];
 
 export function rutLine(tired: string[]): string {
   if (tired.includes('Indian')) return "Let's get you out of the curry rut.";
@@ -36,8 +36,7 @@ export function counterLine(shown: number, total: number): string {
 }
 
 export function origin(dish: Dish): string {
-  const region = REGION_NAMES[dish.region];
-  return `${dish.cuisine}, from ${region}`;
+  return `${dish.cuisine}, ${REGION_NAMES[dish.region]}`;
 }
 
 export function attributeChips(dish: Dish): string[] {

@@ -1,8 +1,9 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { DISHES } from '../data/dishes';
 import { finalPicks, MAX_PROPOSALS, type Dish } from '../engine';
 import {
   clearStore,
+  forgetAccepted,
   loadStore,
   recentlyAcceptedIds,
   recordAccepted,
@@ -44,9 +45,19 @@ export function App() {
     dispatch({ type: 'reset-settings' });
   }
 
+  // Backing out of a yes means it wasn't one, so the dish shouldn't be hidden for 14 days.
+  function backFromYes(dish: Dish) {
+    forgetAccepted(dish.id);
+    dispatch({ type: 'back' });
+  }
+
   const back = () => dispatch({ type: 'back' });
   const startOver = () => dispatch({ type: 'start-over' });
   const tone = state.screen === 'yes' ? 'go' : 'decide';
+
+  useEffect(() => {
+    document.documentElement.dataset.tone = tone;
+  }, [tone]);
 
   return (
     <div className="app" data-tone={tone}>
@@ -56,6 +67,7 @@ export function App() {
             step={state.step}
             settings={state.settings}
             storageFailed={storageFailed}
+            hasSavedData={loadStore().settings !== null}
             onToggleTired={(cuisine) => dispatch({ type: 'toggle-tired', cuisine })}
             onAnswer={(field, value) => dispatch({ type: 'answer', field, value })}
             onNext={() => dispatch({ type: 'next-step' })}
@@ -82,7 +94,12 @@ export function App() {
           />
         )}
         {state.screen === 'yes' && state.dish && (
-          <YesScreen dish={state.dish} onBack={back} onStartOver={startOver} />
+          <YesScreen
+            dish={state.dish}
+            storageFailed={storageFailed}
+            onBack={() => state.dish && backFromYes(state.dish)}
+            onStartOver={startOver}
+          />
         )}
         {state.screen === 'final' && state.session && (
           <FinalPick

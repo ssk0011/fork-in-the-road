@@ -8,6 +8,11 @@ function average(values: number[]): number {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
+// True when most of the pool sits strictly past the dish, so "than most" holds.
+function mostAre(pool: Dish[], past: (other: Dish) => boolean): boolean {
+  return pool.filter(past).length > pool.length / 2;
+}
+
 function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
@@ -29,9 +34,14 @@ export function contrastLine(dish: Dish, tired: string[], dishes: readonly Dish[
 
   const richnessGap = dish.richness - average(pool.map((other) => other.richness));
   const heatGap = dish.heat - average(pool.map((other) => other.heat));
-  const richness =
-    richnessGap <= -RICHNESS_GAP ? 'lighter' : richnessGap >= RICHNESS_GAP ? 'richer' : null;
-  const heat = heatGap <= -HEAT_GAP ? 'milder' : heatGap >= HEAT_GAP ? 'hotter' : null;
+  const lighter =
+    richnessGap <= -RICHNESS_GAP && mostAre(pool, (other) => other.richness > dish.richness);
+  const richer =
+    richnessGap >= RICHNESS_GAP && mostAre(pool, (other) => other.richness < dish.richness);
+  const milder = heatGap <= -HEAT_GAP && mostAre(pool, (other) => other.heat > dish.heat);
+  const hotter = heatGap >= HEAT_GAP && mostAre(pool, (other) => other.heat < dish.heat);
+  const richness = lighter ? 'lighter' : richer ? 'richer' : null;
+  const heat = milder ? 'milder' : hotter ? 'hotter' : null;
 
   const distance = Math.min(...pool.map((other) => regionDistance(dish.region, other.region)));
   const comparison = joinComparisons(richness, heat);
@@ -45,7 +55,7 @@ export function contrastLine(dish: Dish, tired: string[], dishes: readonly Dish[
       : 'Same part of the map, but a different kind of dish entirely.';
   }
 
-  const place = distance === 1 ? 'a different corner of the map' : 'a neighboring part of the map';
+  const place = distance === 1 ? 'a different corner of the map' : 'one region over';
   if (comparison) return `${comparison} than most of what you've been eating, and from ${place}.`;
   return `Similar weight and heat to what you've been eating, but from ${place}.`;
 }

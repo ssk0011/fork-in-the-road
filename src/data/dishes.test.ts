@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { contrastLine } from '../engine/contrast';
 import { applyReason, reasonsFor } from '../engine/reasons';
 import { candidates, createSession, finalPicks, proposeNext } from '../engine/select';
-import type { Settings } from '../engine/types';
+import type { Dish, Settings } from '../engine/types';
 import { CUISINES } from './cuisines';
 import { DISHES } from './dishes';
 
@@ -99,14 +99,14 @@ describe('dish data with the engine', () => {
     const tiredSets = [['Indian'], ['Mexican', 'Chinese'], ['Korean', 'Jamaican', 'Greek']];
     for (const tired of tiredSets) {
       const pool = DISHES.filter((dish) => tired.includes(dish.cuisine));
-      const avg = (key: 'richness' | 'heat') =>
-        pool.reduce((sum, dish) => sum + dish[key], 0) / pool.length;
       for (const dish of DISHES) {
         const text = contrastLine(dish, tired, DISHES).toLowerCase();
-        if (text.includes('lighter')) expect(dish.richness).toBeLessThan(avg('richness'));
-        if (text.includes('richer')) expect(dish.richness).toBeGreaterThan(avg('richness'));
-        if (text.includes('milder')) expect(dish.heat).toBeLessThan(avg('heat'));
-        if (text.includes('hotter')) expect(dish.heat).toBeGreaterThan(avg('heat'));
+        const most = (past: (other: Dish) => boolean) =>
+          expect(pool.filter(past).length).toBeGreaterThan(pool.length / 2);
+        if (text.includes('lighter')) most((other) => other.richness > dish.richness);
+        if (text.includes('richer')) most((other) => other.richness < dish.richness);
+        if (text.includes('milder')) most((other) => other.heat > dish.heat);
+        if (text.includes('hotter')) most((other) => other.heat < dish.heat);
       }
     }
   });

@@ -317,7 +317,19 @@ describe('contrast line', () => {
   });
 
   it('names a neighboring region correctly', () => {
-    expect(line(dish('a', { richness: 4, heat: 3 }))).toContain('a neighboring part of the map');
+    expect(line(dish('a', { richness: 4, heat: 3 }))).toContain('from one region over');
+  });
+
+  it('only says "than most" when most dishes really are past it', () => {
+    const tired = [0, 4, 0].map((heat, index) =>
+      dish(`tired-${index}`, {
+        cuisine: 'Chinese',
+        region: 'east-asia',
+        heat: heat as Dish['heat'],
+      }),
+    );
+    const mild = dish('mild', { heat: 0, region: 'latin-america', richness: 3 });
+    expect(contrastLine(mild, ['Chinese'], [...tired, mild])).not.toContain('Milder');
   });
 
   it('handles the same region with the same or a different format', () => {

@@ -1,4 +1,17 @@
-import { useEffect, useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useRef, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+
+const REPEAT_TAP_MS = 250;
+let lastTapAt = -Infinity;
+
+// The next screen's button can land under a double tap, so a repeat within a
+// moment is ignored. Keyboard presses have detail 0 and always count.
+export function firstTap(action: () => void) {
+  return (event: MouseEvent) => {
+    if (event.detail > 0 && event.timeStamp - lastTapAt < REPEAT_TAP_MS) return;
+    lastTapAt = event.timeStamp;
+    action();
+  };
+}
 
 export function ScreenHeading({
   children,
@@ -98,6 +111,7 @@ export function RadioButtons({
   onConfirm: (value: number) => void;
 }) {
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const answered = options.some((option) => option.value === value);
 
   function onKeyDown(event: KeyboardEvent, index: number) {
     const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
@@ -121,9 +135,9 @@ export function RadioButtons({
           type="button"
           role="radio"
           aria-checked={option.value === value}
-          tabIndex={option.value === value ? 0 : -1}
+          tabIndex={option.value === value || (!answered && index === 0) ? 0 : -1}
           className="option"
-          onClick={() => onConfirm(option.value)}
+          onClick={firstTap(() => onConfirm(option.value))}
           onKeyDown={(event) => onKeyDown(event, index)}
         >
           <span className="option-label">{option.label}</span>

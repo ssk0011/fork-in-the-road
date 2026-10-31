@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   clearStore,
+  forgetAccepted,
   loadStore,
   parseStore,
   recentlyAcceptedIds,
@@ -73,6 +74,14 @@ describe('storage round trip', () => {
     recordAccepted('momo', 1, storage);
     recordAccepted('momo', 2, storage);
     expect(loadStore(storage).accepted).toEqual([{ id: 'momo', at: 2 }]);
+  });
+
+  it('forgets one accepted dish without touching the rest', () => {
+    const storage = fakeStorage();
+    recordAccepted('momo', 1, storage);
+    recordAccepted('suya', 2, storage);
+    forgetAccepted('momo', storage);
+    expect(loadStore(storage).accepted).toEqual([{ id: 'suya', at: 2 }]);
   });
 
   it('reports failure instead of throwing when storage is blocked', () => {

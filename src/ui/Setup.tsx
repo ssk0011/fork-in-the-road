@@ -42,6 +42,7 @@ export function Setup({
   step,
   settings,
   storageFailed,
+  hasSavedData,
   onToggleTired,
   onAnswer,
   onNext,
@@ -53,6 +54,7 @@ export function Setup({
   step: number;
   settings: Settings;
   storageFailed: boolean;
+  hasSavedData: boolean;
   onToggleTired: (cuisine: string) => void;
   onAnswer: (field: Field, value: number) => void;
   onNext: () => void;
@@ -77,6 +79,7 @@ export function Setup({
       {question ? (
         <main className="screen" key={question.field}>
           <ScreenHeading className="question">{question.title}</ScreenHeading>
+          <p className="lede">Tap one to keep going.</p>
           <RadioButtons
             label={question.title}
             options={question.options}
@@ -117,6 +120,11 @@ export function Setup({
           {storageFailed && (
             <p className="hint">This browser is blocking storage, so your picks won't be saved.</p>
           )}
+          {hasSavedData && (
+            <button type="button" className="text-button text-button-start" onClick={onClearData}>
+              Clear my data
+            </button>
+          )}
           <div className="actions">
             <button
               type="button"
@@ -125,9 +133,6 @@ export function Setup({
               onClick={onNext}
             >
               Next
-            </button>
-            <button type="button" className="text-button" onClick={onClearData}>
-              Clear my data
             </button>
           </div>
         </main>

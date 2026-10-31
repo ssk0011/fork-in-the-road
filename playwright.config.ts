@@ -7,6 +7,8 @@ export default defineConfig({
     baseURL: 'http://localhost:4173/fork-in-the-road/',
     viewport: { width: 390, height: 844 },
     trace: 'retain-on-failure',
+    // Slower than the app's repeat-tap guard, like a person tapping.
+    launchOptions: { slowMo: 300 },
   },
   webServer: {
     command: 'npm run build && npm run preview -- --port 4173 --strictPort',

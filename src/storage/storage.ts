@@ -84,6 +84,12 @@ export function recordAccepted(id: string, now: number, storage = getStorage()):
   return writeStore({ ...store, accepted }, storage);
 }
 
+export function forgetAccepted(id: string, storage = getStorage()): boolean {
+  const store = loadStore(storage);
+  const accepted = store.accepted.filter((item) => item.id !== id);
+  return writeStore({ ...store, accepted }, storage);
+}
+
 export function clearStore(storage = getStorage()): boolean {
   try {
     storage?.removeItem(KEY);
