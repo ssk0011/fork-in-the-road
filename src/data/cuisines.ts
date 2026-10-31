@@ -1,3 +1,5 @@
+export const MAX_TIRED = 4;
+
 export const CUISINES = [
   'Indian',
   'Nepali/Tibetan',

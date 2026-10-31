@@ -1,11 +1,10 @@
-import { CUISINES } from '../data/cuisines';
+import { CUISINES, MAX_TIRED } from '../data/cuisines';
 import type { Settings } from '../engine/types';
 
 const KEY = 'fork-in-the-road';
 const VERSION = 1;
 const DAY_MS = 24 * 60 * 60 * 1000;
-export const ACCEPTED_WINDOW_DAYS = 14;
-const MAX_TIRED = 4;
+const ACCEPTED_WINDOW_DAYS = 14;
 
 export type AcceptedDish = { id: string; at: number };
 export type Store = { settings: Settings | null; accepted: AcceptedDish[] };

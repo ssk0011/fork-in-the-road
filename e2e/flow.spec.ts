@@ -1,13 +1,17 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
+async function answerQuestions(page: Page) {
+  await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
+  await page.getByRole('radio', { name: /^\$\$\$/ }).click();
+  await page.getByRole('radio', { name: /Fresh territory/ }).click();
+}
+
 async function answerSetup(page: Page, cuisine = 'Indian') {
   await page.goto('./');
   await page.getByRole('button', { name: cuisine, exact: true }).click();
   await page.getByRole('button', { name: 'Next' }).click();
-  await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
-  await page.getByRole('radio', { name: /^\$\$\$/ }).click();
-  await page.getByRole('radio', { name: /Fresh territory/ }).click();
+  await answerQuestions(page);
   await expect(page.getByText('Dish 1 of 5.')).toBeVisible();
 }
 
@@ -125,9 +129,7 @@ test('actions stay on screen at 320 by 568', async ({ page }) => {
   await page.getByRole('button', { name: 'Thai', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Next' })).toBeInViewport();
   await page.getByRole('button', { name: 'Next' }).click();
-  await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
-  await page.getByRole('radio', { name: /^\$\$\$/ }).click();
-  await page.getByRole('radio', { name: /Fresh territory/ }).click();
+  await answerQuestions(page);
   await expect(page.getByRole('button', { name: 'Not this' })).toBeInViewport();
 });
 
@@ -174,9 +176,7 @@ test('every screen passes automated accessibility checks', async ({ page }) => {
   await check();
   await page.getByRole('button', { name: 'Next' }).click();
   await check();
-  await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
-  await page.getByRole('radio', { name: /^\$\$\$/ }).click();
-  await page.getByRole('radio', { name: /Fresh territory/ }).click();
+  await answerQuestions(page);
   await page.waitForTimeout(300);
   await check();
   await page.getByRole('button', { name: 'Not this' }).click();
@@ -206,9 +206,7 @@ test('capture screenshots', async ({ page }) => {
     await page.getByRole('button', { name: 'Next' }).click();
     await page.waitForTimeout(300);
     await shot('2-hunger');
-    await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
-    await page.getByRole('radio', { name: /^\$\$\$/ }).click();
-    await page.getByRole('radio', { name: /Fresh territory/ }).click();
+    await answerQuestions(page);
     await page.waitForTimeout(300);
     await shot('3-proposal');
     await page.getByRole('button', { name: 'Not this' }).click();

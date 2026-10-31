@@ -1,4 +1,4 @@
-import { regionDistance, tiredDishes } from './novelty';
+import { nearestRegionDistance, tiredDishes } from './novelty';
 import type { Dish } from './types';
 
 const RICHNESS_GAP = 0.75;
@@ -43,7 +43,7 @@ export function contrastLine(dish: Dish, tired: string[], dishes: readonly Dish[
   const richness = lighter ? 'lighter' : richer ? 'richer' : null;
   const heat = milder ? 'milder' : hotter ? 'hotter' : null;
 
-  const distance = Math.min(...pool.map((other) => regionDistance(dish.region, other.region)));
+  const distance = nearestRegionDistance(dish.region, pool);
   const comparison = joinComparisons(richness, heat);
   const familiarShape = pool.some((other) => other.format === dish.format);
 

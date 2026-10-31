@@ -1,10 +1,9 @@
 import { CUISINES } from '../data/cuisines';
 import type { Settings } from '../engine';
-import { MAX_TIRED, SETUP_STEPS } from './appReducer';
+import { MAX_TIRED } from '../data/cuisines';
+import { SETUP_STEPS, type Field } from './appReducer';
 import { Header, RadioButtons, RoadProgress, ScreenHeading, type RadioOption } from './components';
-import { rutLine } from './copy';
-
-type Field = 'hunger' | 'budget' | 'adventure';
+import { questionProgress, rutLine } from './copy';
 
 const QUESTIONS: { field: Field; title: string; options: RadioOption[] }[] = [
   {
@@ -63,7 +62,6 @@ export function Setup({
   onStartOver: () => void;
   onClearData: () => void;
 }) {
-  const label = `Question ${step + 1} of ${SETUP_STEPS}`;
   const question = QUESTIONS[step - 1];
   const atLimit = settings.tired.length >= MAX_TIRED;
 
@@ -73,7 +71,7 @@ export function Setup({
         onBack={step > 0 ? onBack : undefined}
         onStartOver={step > 0 ? onStartOver : undefined}
       >
-        <RoadProgress done={step + 1} total={SETUP_STEPS} label={label} />
+        <RoadProgress done={step + 1} total={SETUP_STEPS} label={questionProgress(step)} />
       </Header>
 
       {question ? (

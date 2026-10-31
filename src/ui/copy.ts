@@ -1,4 +1,5 @@
-import type { Dish, Region } from '../engine';
+import { MAX_PROPOSALS, type Dish, type Region } from '../engine';
+import { SETUP_STEPS } from './appReducer';
 
 const REGION_NAMES: Record<Region, string> = {
   'south-asia': 'South Asia',
@@ -29,6 +30,14 @@ export function rutLine(tired: string[]): string {
   const [only] = tired;
   if (tired.length === 1 && only) return `Let's get you out of the ${only} rut.`;
   return "Let's get you out of the rut.";
+}
+
+export function questionProgress(step: number): string {
+  return `Question ${step + 1} of ${SETUP_STEPS}`;
+}
+
+export function dishProgress(shown: number): string {
+  return `Dish ${shown} of ${MAX_PROPOSALS}`;
 }
 
 export function counterLine(shown: number, total: number): string {

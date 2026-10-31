@@ -3,13 +3,13 @@ import { createRng } from './rng';
 import type { Constraints, Dish, Session, Settings } from './types';
 
 export const MAX_PROPOSALS = 5;
-export const WIDEN_AFTER_NOS = 3;
+const WIDEN_AFTER_NOS = 3;
 
 const NOVELTY_TARGETS = [0.35, 0.6, 0.85];
 const TOP_POOL = 5;
 const FINAL_PICKS = 3;
 
-export function emptyConstraints(): Constraints {
+function emptyConstraints(): Constraints {
   return {
     excludedIngredients: [],
     excludedFormats: [],

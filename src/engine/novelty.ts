@@ -18,6 +18,10 @@ export function regionDistance(a: Region, b: Region): number {
   return ADJACENT[a].includes(b) ? 0.5 : 1;
 }
 
+export function nearestRegionDistance(region: Region, pool: Dish[]): number {
+  return Math.min(...pool.map((other) => regionDistance(region, other.region)));
+}
+
 export function tiredDishes(tired: string[], dishes: readonly Dish[]): Dish[] {
   return dishes.filter((dish) => tired.includes(dish.cuisine));
 }
@@ -31,7 +35,7 @@ export function novelty(dish: Dish, tired: string[], dishes: readonly Dish[]): n
   const pool = tiredDishes(tired, dishes);
   if (pool.length === 0) return 1;
 
-  const region = Math.min(...pool.map((other) => regionDistance(dish.region, other.region)));
+  const region = nearestRegionDistance(dish.region, pool);
   const format = 1 - shareOf(pool, (other) => other.format === dish.format);
   const ingredient = 1 - shareOf(pool, (other) => other.mainIngredient === dish.mainIngredient);
   const texture = 1 - shareOf(pool, (other) => other.texture === dish.texture);

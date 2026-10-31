@@ -1,3 +1,4 @@
+import { MAX_TIRED } from '../data/cuisines';
 import { DISHES } from '../data/dishes';
 import {
   applyReason,
@@ -10,9 +11,10 @@ import {
 } from '../engine';
 
 export const SETUP_STEPS = 4;
-export const MAX_TIRED = 4;
 // 0 means not answered yet, so no option starts out looking chosen.
-export const DEFAULT_SETTINGS: Settings = { tired: [], hunger: 0, budget: 0, adventure: 0 };
+const DEFAULT_SETTINGS: Settings = { tired: [], hunger: 0, budget: 0, adventure: 0 };
+
+export type Field = 'hunger' | 'budget' | 'adventure';
 
 type Snapshot = { session: Session; dish: Dish };
 
@@ -29,7 +31,7 @@ export type AppState = {
 
 export type Action =
   | { type: 'toggle-tired'; cuisine: string }
-  | { type: 'answer'; field: 'hunger' | 'budget' | 'adventure'; value: number }
+  | { type: 'answer'; field: Field; value: number }
   | { type: 'next-step' }
   | { type: 'start'; recentlyAccepted: string[]; seed: number }
   | { type: 'open-sheet' }

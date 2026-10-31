@@ -1,6 +1,6 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useLayoutEffect, useReducer, useRef, useState, type MouseEvent } from 'react';
 import { DISHES } from '../data/dishes';
-import { finalPicks, MAX_PROPOSALS, type Dish } from '../engine';
+import { finalPicks, type Dish } from '../engine';
 import {
   clearStore,
   forgetAccepted,
@@ -9,15 +9,18 @@ import {
   recordAccepted,
   saveSettings,
 } from '../storage/storage';
-import { appReducer, initialState, SETUP_STEPS, type AppState } from './appReducer';
+import { appReducer, initialState, type AppState } from './appReducer';
+import { dishProgress, questionProgress } from './copy';
 import { FinalPick, YesScreen } from './Endings';
 import { Proposal } from './Proposal';
 import { Setup } from './Setup';
 
+const REPEAT_TAP_MS = 250;
+
 function announcement(state: AppState): string {
-  if (state.screen === 'setup') return `Question ${state.step + 1} of ${SETUP_STEPS}`;
+  if (state.screen === 'setup') return questionProgress(state.step);
   if (state.screen === 'proposal' && state.dish && state.session) {
-    return `Dish ${state.session.shown} of ${MAX_PROPOSALS}: ${state.dish.name}. ${state.dish.blurb}`;
+    return `${dishProgress(state.session.shown)}: ${state.dish.name}. ${state.dish.blurb}`;
   }
   if (state.screen === 'yes' && state.dish) return `${state.dish.name} it is.`;
   return 'Final pick';
@@ -55,12 +58,26 @@ export function App() {
   const startOver = () => dispatch({ type: 'start-over' });
   const tone = state.screen === 'yes' ? 'go' : 'decide';
 
+  const viewChangedAt = useRef(-Infinity);
+  useLayoutEffect(() => {
+    viewChangedAt.current = performance.now();
+  }, [state.screen, state.step, state.dish, state.sheetOpen]);
+
+  // A double tap's second tap would land on whatever just appeared under the finger.
+  // Keyboard clicks have detail 0 and always count.
+  function dropRepeatTap(event: MouseEvent) {
+    if (event.detail > 0 && event.timeStamp - viewChangedAt.current < REPEAT_TAP_MS) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+
   useEffect(() => {
     document.documentElement.dataset.tone = tone;
   }, [tone]);
 
   return (
-    <div className="app" data-tone={tone}>
+    <div className="app" data-tone={tone} onClickCapture={dropRepeatTap}>
       <div className="column">
         {state.screen === 'setup' && (
           <Setup

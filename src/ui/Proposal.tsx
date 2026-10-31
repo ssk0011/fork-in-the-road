@@ -8,8 +8,8 @@ import {
   type ReasonId,
   type Session,
 } from '../engine';
-import { firstTap, Header, RoadProgress, ScreenHeading } from './components';
-import { attributeChips, counterLine, origin } from './copy';
+import { Header, RoadProgress, ScreenHeading } from './components';
+import { attributeChips, counterLine, dishProgress, origin } from './copy';
 
 function ReasonSheet({
   dish,
@@ -50,7 +50,7 @@ function ReasonSheet({
               key={reason.id}
               type="button"
               className="button button-reason"
-              onClick={firstTap(() => onReason(reason.id))}
+              onClick={() => onReason(reason.id)}
             >
               {reason.label}
             </button>
@@ -91,7 +91,7 @@ export function Proposal({
         <RoadProgress
           done={session.shown}
           total={MAX_PROPOSALS}
-          label={`Dish ${session.shown} of ${MAX_PROPOSALS}`}
+          label={dishProgress(session.shown)}
         />
       </Header>
       <main className="screen" key={dish.id}>
@@ -108,10 +108,10 @@ export function Proposal({
           </ul>
         </div>
         <div className="actions">
-          <button type="button" className="button button-primary" onClick={firstTap(onYes)}>
+          <button type="button" className="button button-primary" onClick={onYes}>
             Yes, that's the one
           </button>
-          <button type="button" className="button button-secondary" onClick={firstTap(onNo)}>
+          <button type="button" className="button button-secondary" onClick={onNo}>
             Not this
           </button>
         </div>

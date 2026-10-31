@@ -161,11 +161,6 @@ h1:focus {
   letter-spacing: -0.01em;
 }
 
-.lede,
-.hint {
-  max-width: 34em;
-}
-
 .hint {
   font-size: 1rem;
 }
