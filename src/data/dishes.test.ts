@@ -44,6 +44,8 @@ const TAGS = [
   'peanut',
   'tree-nut',
   'alcohol',
+  'sesame',
+  'soy',
 ];
 const TEXTURES = ['crunchy', 'creamy', 'chewy', 'brothy', 'tender', 'fresh'];
 
@@ -112,10 +114,30 @@ describe('dish data', () => {
       'wheat noodles': 'gluten',
       'egg noodles': 'egg',
       pita: 'gluten',
+      tofu: 'soy',
     };
     for (const dish of DISHES) {
       const tag = expected[dish.mainIngredient];
       if (tag) expect(dish.contains, dish.name).toContain(tag);
+    }
+  });
+
+  it('never offers well-known sesame or soy dishes to people avoiding them', () => {
+    const named = (names: string[]) => DISHES.filter((dish) => names.includes(dish.name));
+    const sesame = ['Bibimbap', 'Falafel Wrap', 'Galbi', 'Scallion Pancakes', 'Fattoush'];
+    expect(named(sesame)).toHaveLength(sesame.length);
+    for (const dish of named(sesame)) expect(fitsRestrictions(dish, ['no-sesame'])).toBe(false);
+    const soy = ['Mapo Tofu', 'Chicken Adobo', 'Pho Chay', 'Gado-Gado'];
+    expect(named(soy)).toHaveLength(soy.length);
+    for (const dish of named(soy)) expect(fitsRestrictions(dish, ['no-soy'])).toBe(false);
+  });
+
+  it('treats soy sauce dishes as gluten unless known otherwise', () => {
+    const glutenFreeSoy = ['Jollof Rice', 'Groundnut Stew'];
+    for (const dish of DISHES) {
+      if (dish.contains.includes('soy') && !glutenFreeSoy.includes(dish.name)) {
+        expect(dish.contains, dish.name).toContain('gluten');
+      }
     }
   });
 

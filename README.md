@@ -20,7 +20,7 @@ npm run dev
 ## Decisions the brief left open
 
 - **Soft and hard constraints:** hard filters are rejected dishes, tired cuisines, budget and dishes accepted in the last 14 days. The hunger range and everything from a "no" reason are soft, so the final pick can relax them. Dishes that break fewer soft constraints rank higher there.
-- **Dietary restrictions:** vegetarian, vegan, halal-friendly (no pork or alcohol), no beef, no shellfish, no gluten, no dairy, no peanuts and no tree nuts. These are hard filters and are never relaxed. Dishes are tagged with what a typical restaurant version usually contains, including hidden ingredients like fish sauce. Any active restriction shows a note to check with the restaurant, and the app never says a dish is safe.
+- **Dietary restrictions:** vegetarian, vegan, halal-friendly (no pork or alcohol), no beef, no shellfish, no gluten, no dairy, no fish, no egg, no peanuts, no tree nuts, no sesame and no soy. Together these cover all nine major US allergens. These are hard filters and are never relaxed. Dishes are tagged with what a typical restaurant version usually contains, including hidden ingredients like fish sauce. Any active restriction shows a note to check with the restaurant, and the app never says a dish is safe.
 - **Halal-friendly:** this means the dish usually has no pork or alcohol. It doesn't mean the meat is certified halal.
 - **Reasons beat hunger:** "Not filling enough" raises the floor of the size range, even above the hunger answer. Otherwise a Peckish user could end up with nothing to show.
 - **Back undoes:** Back on a dish returns to the previous dish and removes that rejection and its constraint.

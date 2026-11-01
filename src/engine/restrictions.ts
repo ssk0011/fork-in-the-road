@@ -12,10 +12,14 @@ export const RESTRICTIONS = [
   },
   { id: 'no-beef', label: 'No beef', excludes: ['beef'] },
   { id: 'no-shellfish', label: 'No shellfish', excludes: ['shellfish'] },
+  { id: 'no-fish', label: 'No fish', excludes: ['fish'] },
+  { id: 'no-egg', label: 'No egg', excludes: ['egg'] },
   { id: 'no-gluten', label: 'No gluten', excludes: ['gluten'] },
   { id: 'no-dairy', label: 'No dairy', excludes: ['dairy'] },
   { id: 'no-peanuts', label: 'No peanuts', excludes: ['peanut'] },
   { id: 'no-tree-nuts', label: 'No tree nuts', excludes: ['tree-nut'] },
+  { id: 'no-sesame', label: 'No sesame', excludes: ['sesame'] },
+  { id: 'no-soy', label: 'No soy', excludes: ['soy'] },
 ] as const satisfies readonly { id: string; label: string; excludes: readonly ContainsTag[] }[];
 
 export type RestrictionId = (typeof RESTRICTIONS)[number]['id'];

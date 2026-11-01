@@ -19,7 +19,10 @@ The `contains` tags decide what people with allergies and diets get shown, so th
 
 - **Tree nuts:** Butter Chicken and Aji de Gallina are tagged for cashews or walnuts or pecans that not every kitchen uses. Dishes fried in peanut oil or garnished with nuts aren't tagged.
 - **Peanuts:** only dishes where peanuts are expected are tagged. Cross-contact is common in Thai, Vietnamese, Indonesian and West African kitchens, and the data can't capture it.
-- **Sesame, soy and mustard** aren't tracked at all, although sesame and soy are major allergens. Falafel Wrap's tahini is one example.
+- **Sesame:** tagged wherever it's commonly used, including sesame oil, seeds, tahini, hummus sides, za'atar and furikake. It's often hidden, so some are cautious guesses (Masala Dosa, Dal Bhat, Shish Tawook). Breads with seeds aren't always captured. Ethiopian spice blends aren't tagged.
+- **Soy:** tagged for tofu, soy sauce, oyster and hoisin sauces, and stock cubes such as Maggi in West African cooking. Soybean cooking oil isn't tagged, so people with severe soy allergies can't rely on this.
+- **Fish:** includes fish sauce and dashi. Inari Sushi, Bibimbap (kimchi) and Red Red (often cooked with smoked fish) are cautious tags, so vegans won't see them.
+- **Mustard** isn't tracked. It isn't a major US allergen, but it is elsewhere.
 - **Halal-friendly:** covers pork and alcohol only, and says nothing about how meat was slaughtered.
 - **New dishes** (Aloo Gobi, Rajma Chawal, Pho Chay, Mujaddara, Imam Bayildi, Gigantes Plaki, Tacos de Papa, Guacamole with Totopos, Lobio, Vegetable Tagine, Acai Bowl, Ital Stew, Red Red, Solterito, Scallion Pancakes, Inari Sushi, Shiro): some kitchens use meat stock, dairy or fish-based dashi in these.
 

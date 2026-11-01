@@ -38,6 +38,8 @@ export type ContainsTag =
   | 'gluten'
   | 'peanut'
   | 'tree-nut'
+  | 'sesame'
+  | 'soy'
   | 'alcohol';
 
 export type Dish = {
