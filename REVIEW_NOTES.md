@@ -11,6 +11,10 @@
 
 The reviews ran before the fixes below. Nobody re-reviewed the fixes independently, but all tests were rerun after them.
 
+## Allergen tag audit
+
+An independent subagent audited all 81 dishes for missing tags. It found no wrong tags and about 40 likely missing ones, and every one was applied, including medium-confidence ones. Its Maggi stock cube and soy notes were also applied cautiously.
+
 ## Fixed
 
 - Focus was lost after choosing a reason.
@@ -39,6 +43,6 @@ The reviews ran before the fixes below. Nobody re-reviewed the fixes independent
 
 ## Not verified
 
-- Dietary restrictions were added after the independent reviews, so they've had tests but no independent review.
+- The dietary filter code has had tests but no independent code review. The dish tags had one independent audit from general knowledge, with no sources checked. No restaurant or dietitian has checked them.
 
 - The repeat-tap guard and sticky actions were tested in desktop Chromium only, not on a real phone or in Safari.

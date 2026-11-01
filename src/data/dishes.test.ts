@@ -132,12 +132,9 @@ describe('dish data', () => {
     for (const dish of named(soy)) expect(fitsRestrictions(dish, ['no-soy'])).toBe(false);
   });
 
-  it('treats soy sauce dishes as gluten unless known otherwise', () => {
-    const glutenFreeSoy = ['Jollof Rice', 'Groundnut Stew'];
+  it('treats soy sauce dishes as gluten', () => {
     for (const dish of DISHES) {
-      if (dish.contains.includes('soy') && !glutenFreeSoy.includes(dish.name)) {
-        expect(dish.contains, dish.name).toContain('gluten');
-      }
+      if (dish.contains.includes('soy')) expect(dish.contains, dish.name).toContain('gluten');
     }
   });
 

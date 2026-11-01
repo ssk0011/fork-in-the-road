@@ -10,10 +10,18 @@ The `contains` tags decide what people with allergies and diets get shown, so th
 
 - Thai, Vietnamese, Indonesian and Filipino dishes: fish sauce or shrimp paste, even in vegetable-looking dishes.
 - Soy sauce counts as gluten.
-- Indian and Nepali dishes: ghee counts as dairy, so Chana Masala and Dal Bhat aren't vegan here, although many are.
+- Indian and Nepali dishes: ghee counts as dairy, so Chana Masala, Aloo Gobi, Rajma Chawal and Dal Bhat aren't vegan here, although many are.
 - Mirin and Shaoxing wine count as alcohol. Other marinades and sauces may also use alcohol that I haven't tagged.
 - Injera counts as gluten, although pure teff versions exist.
 - Jollof Rice is tagged poultry for chicken stock, and Thukpa, Momo and Groundnut Stew are tagged for their usual chicken. All have vegetable versions, so vegetarians won't see them.
+
+**What the tags can't capture:**
+
+- Cross-contact from shared fryers, woks, bakeries and tahini equipment. Middle Eastern, Turkish, Korean and Japanese kitchens carry the most sesame risk.
+- Peanut oil, which isn't tagged.
+- Bread sides such as naan and bhatura, which can add gluten, egg or sesame.
+- Asafoetida, which often contains wheat, and candlenut in Southeast Asian pastes.
+- Honey and gelatin, for vegans.
 
 **Worth a second look:**
 

@@ -33,7 +33,7 @@ export function rutLine(tired: string[]): string {
 }
 
 export const CHECK_WITH_RESTAURANT =
-  'Recipes vary, so always ask the restaurant, especially about allergies.';
+  'Recipes vary and kitchens share equipment, so always ask the restaurant about allergies.';
 
 export function questionProgress(step: number): string {
   return `Question ${step + 1} of ${SETUP_STEPS}`;
