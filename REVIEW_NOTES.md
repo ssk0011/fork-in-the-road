@@ -15,6 +15,8 @@ The reviews ran before the fixes below. Nobody re-reviewed the fixes independent
 
 An independent subagent audited all 81 dishes for missing tags. It found no wrong tags and about 40 likely missing ones, and every one was applied, including medium-confidence ones. Its Maggi stock cube and soy notes were also applied cautiously.
 
+A second audit covered the 41 dishes added in the third round. It found no wrong tags and 20 likely missing ones, and all were applied.
+
 ## Fixed
 
 - Focus was lost after choosing a reason.

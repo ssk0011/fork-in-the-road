@@ -24,7 +24,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Indian', 'south-asia', [
     {
       name: 'Chana Chaat',
-      contains: [],
+      contains: ['dairy', 'gluten'],
       blurb: 'A tangy chickpea salad with onion, tomato, lime and chaat spice.',
       richness: 1,
       heat: 2,
@@ -159,7 +159,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Thai', 'southeast-asia', [
     {
       name: 'Tom Yum',
-      contains: ['shellfish', 'fish'],
+      contains: ['shellfish', 'fish', 'dairy'],
       blurb: 'A hot-and-sour lemongrass soup with shrimp and mushrooms.',
       richness: 1,
       heat: 3,
@@ -227,7 +227,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Vietnamese', 'southeast-asia', [
     {
       name: 'Bun Cha',
-      contains: ['pork', 'fish'],
+      contains: ['pork', 'fish', 'shellfish'],
       blurb: 'Grilled pork patties with cold rice noodles, herbs and dipping sauce.',
       richness: 3,
       heat: 1,
@@ -337,7 +337,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Filipino', 'southeast-asia', [
     {
       name: 'Pancit Canton',
-      contains: ['pork', 'shellfish', 'poultry', 'soy', 'gluten', 'egg'],
+      contains: ['pork', 'shellfish', 'poultry', 'soy', 'gluten', 'egg', 'fish'],
       blurb: 'Stir-fried egg noodles with pork, shrimp and vegetables.',
       richness: 3,
       heat: 0,
@@ -393,7 +393,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Chinese', 'east-asia', [
     {
       name: 'Dan Dan Noodles',
-      contains: ['pork', 'soy', 'sesame', 'gluten', 'peanut'],
+      contains: ['pork', 'soy', 'sesame', 'gluten', 'peanut', 'alcohol'],
       blurb: 'Noodles with spicy pork, chili oil and numbing Sichuan pepper.',
       richness: 4,
       heat: 3,
@@ -789,7 +789,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Lebanese', 'middle-east', [
     {
       name: 'Kibbeh',
-      contains: ['meat', 'gluten', 'tree-nut'],
+      contains: ['meat', 'gluten', 'tree-nut', 'beef', 'dairy'],
       blurb: 'Crisp shells of bulgur and lamb stuffed with spiced meat and pine nuts.',
       richness: 3,
       heat: 0,
@@ -1411,7 +1411,7 @@ export const DISHES: readonly Dish[] = [
   ...group('Jamaican', 'caribbean', [
     {
       name: 'Ackee and Saltfish',
-      contains: ['fish'],
+      contains: ['fish', 'gluten'],
       blurb: 'Salt cod sauteed with ackee, a fruit that cooks up soft like eggs.',
       richness: 3,
       heat: 1,
@@ -1493,7 +1493,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Ribollita',
-      contains: ['gluten', 'dairy'],
+      contains: ['gluten', 'dairy', 'pork'],
       blurb: 'A thick Tuscan soup of beans, greens and day-old bread.',
       richness: 2,
       heat: 0,
@@ -1507,7 +1507,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Arancini',
-      contains: ['dairy', 'gluten', 'egg', 'beef'],
+      contains: ['dairy', 'gluten', 'egg', 'beef', 'alcohol', 'pork'],
       blurb: 'Fried risotto balls with a melting cheese center.',
       richness: 4,
       heat: 0,
@@ -1575,7 +1575,7 @@ export const DISHES: readonly Dish[] = [
   ...group('American', 'north-america', [
     {
       name: 'Gumbo',
-      contains: ['pork', 'shellfish', 'poultry', 'gluten'],
+      contains: ['pork', 'shellfish', 'poultry', 'gluten', 'fish'],
       blurb: 'A dark roux stew with sausage, shrimp and okra, served over rice.',
       richness: 4,
       heat: 2,
@@ -1603,7 +1603,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Shrimp and Grits',
-      contains: ['shellfish', 'dairy', 'pork', 'gluten', 'fish'],
+      contains: ['shellfish', 'dairy', 'pork', 'gluten', 'fish', 'alcohol'],
       blurb: 'Buttery stone-ground grits under shrimp, bacon and a savory gravy.',
       richness: 4,
       heat: 1,
@@ -1629,7 +1629,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Poke Bowl',
-      contains: ['fish', 'soy', 'sesame', 'gluten'],
+      contains: ['fish', 'soy', 'sesame', 'gluten', 'egg', 'shellfish', 'tree-nut'],
       blurb: 'Cubes of raw tuna in soy and sesame over rice.',
       richness: 2,
       heat: 1,
@@ -1642,7 +1642,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Succotash',
-      contains: ['dairy'],
+      contains: ['dairy', 'pork'],
       blurb: 'Corn and lima beans cooked together with butter and herbs.',
       richness: 2,
       heat: 0,
@@ -1655,7 +1655,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Cobb Salad',
-      contains: ['poultry', 'pork', 'egg', 'dairy'],
+      contains: ['poultry', 'pork', 'egg', 'dairy', 'fish'],
       blurb: 'Chopped chicken, bacon, egg, avocado and blue cheese.',
       richness: 3,
       heat: 0,
@@ -1668,7 +1668,7 @@ export const DISHES: readonly Dish[] = [
     },
     {
       name: 'Cincinnati Chili',
-      contains: ['beef', 'gluten', 'dairy'],
+      contains: ['beef', 'gluten', 'dairy', 'fish'],
       blurb: 'Spaghetti under a cinnamon-spiced meat sauce and a heap of cheese.',
       richness: 4,
       heat: 1,
