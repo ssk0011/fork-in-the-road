@@ -43,7 +43,7 @@ describe('appReducer', () => {
   it('back from the first dish returns to the last question', () => {
     const back = appReducer(started(), { type: 'back' });
     expect(back.screen).toBe('setup');
-    expect(back.step).toBe(4);
+    expect(back.step).toBe(5);
   });
 
   it('back from yes returns to where the dish was chosen', () => {

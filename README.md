@@ -1,8 +1,8 @@
 # Fork In the Road
 
-A decision helper for people who want to eat something new. Say what you're tired of, what you can't eat, how hungry you are, your budget and how adventurous you feel. It proposes one dish at a time, learns from each "no", and stops after five.
+A decision helper for people who want to eat something new. Say what you're tired of, what you can't eat, how hungry you are, whether to keep it light, your budget and how adventurous you feel. It proposes one dish at a time, learns from each "no", and stops after five.
 
-Dish count: 81 across 20 cuisines, up from the brief's ~60 so vegans have enough to choose from.
+Dish count: 122 across 22 cuisines. That's up from the brief's ~60, so vegans and people with allergies have enough to choose from. Italian and American were added because they're common ruts.
 
 Live site: https://ssk0011.github.io/fork-in-the-road/
 
@@ -22,6 +22,7 @@ npm run dev
 - **Soft and hard constraints:** hard filters are rejected dishes, tired cuisines, budget and dishes accepted in the last 14 days. The hunger range and everything from a "no" reason are soft, so the final pick can relax them. Dishes that break fewer soft constraints rank higher there.
 - **Dietary restrictions:** vegetarian, vegan, halal-friendly (no pork or alcohol), no beef, no shellfish, no gluten, no dairy, no fish, no egg, no peanuts, no tree nuts, no sesame and no soy. Together these cover all nine major US allergens. These are hard filters and are never relaxed. Dishes are tagged with what a typical restaurant version usually contains, including hidden ingredients like fish sauce. Any active restriction shows a note to check with the restaurant, and the app never says a dish is safe.
 - **Halal-friendly:** this means the dish usually has no pork or alcohol. It doesn't mean the meat is certified halal.
+- **Keep it light:** a preference, not a health claim. It hides dishes rated 4 or 5 for richness, as a soft limit the final pick can relax.
 - **Reasons beat hunger:** "Not filling enough" raises the floor of the size range, even above the hunger answer. Otherwise a Peckish user could end up with nothing to show.
 - **Back undoes:** Back on a dish returns to the previous dish and removes that rejection and its constraint.
 - **Reason list:** six slots, two reserved, so at most four dish-specific reasons show, in the brief's table order.

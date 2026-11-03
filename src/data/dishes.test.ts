@@ -104,6 +104,10 @@ describe('dish data', () => {
       beef: 'beef',
       oxtail: 'beef',
       lamb: 'meat',
+      veal: 'beef',
+      'beef heart': 'beef',
+      'salt cod': 'fish',
+      soybeans: 'soy',
       chicken: 'poultry',
       duck: 'poultry',
       shrimp: 'shellfish',
@@ -134,7 +138,10 @@ describe('dish data', () => {
 
   it('treats soy sauce dishes as gluten', () => {
     for (const dish of DISHES) {
-      if (dish.contains.includes('soy')) expect(dish.contains, dish.name).toContain('gluten');
+      // Edamame is the bean itself, with no soy sauce.
+      if (dish.contains.includes('soy') && dish.name !== 'Edamame') {
+        expect(dish.contains, dish.name).toContain('gluten');
+      }
     }
   });
 
@@ -145,6 +152,24 @@ describe('dish data', () => {
       expect(dish.blurb.toLowerCase()).not.toMatch(
         /cheese|chicken|pork|beef|lamb|shrimp|fish|egg\b|yogurt|cream\b|butter\b/,
       );
+    }
+  });
+
+  it('keeps a light dish available for every single restriction and hunger', () => {
+    for (const { id } of RESTRICTIONS) {
+      for (const hunger of [1, 2, 3, 4, 5]) {
+        const settings = {
+          tired: ['American'],
+          restrictions: [id],
+          hunger,
+          budget: 2,
+          adventure: 2,
+          light: 1,
+        };
+        if (candidates(createSession(settings, [], 1), DISHES).length === 0) {
+          throw new Error(`No light dish for ${id} / ${hunger}`);
+        }
+      }
     }
   });
 

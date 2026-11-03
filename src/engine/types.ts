@@ -66,6 +66,7 @@ export type Settings = {
   hunger: number; // 1-5
   budget: number; // 1-3
   adventure: number; // 1-3
+  light?: number; // 1 keep it light, 2 no preference
 };
 
 export type ReasonId =

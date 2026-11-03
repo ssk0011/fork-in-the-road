@@ -27,6 +27,8 @@ const RICHNESS = ['Very light', 'Light', 'Medium richness', 'Rich', 'Very rich']
 
 export function rutLine(tired: string[]): string {
   if (tired.includes('Indian')) return "Let's get you out of the curry rut.";
+  if (tired.includes('American')) return "Let's get you out of the burger rut.";
+  if (tired.includes('Italian')) return "Let's get you out of the pasta rut.";
   const [only] = tired;
   if (tired.length === 1 && only) return `Let's get you out of the ${only} rut.`;
   return "Let's get you out of the rut.";

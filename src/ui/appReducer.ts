@@ -10,7 +10,7 @@ import {
   type Settings,
 } from '../engine';
 
-export const SETUP_STEPS = 5;
+export const SETUP_STEPS = 6;
 // 0 means not answered yet, so no option starts out looking chosen.
 const DEFAULT_SETTINGS: Settings = {
   tired: [],
@@ -18,9 +18,10 @@ const DEFAULT_SETTINGS: Settings = {
   hunger: 0,
   budget: 0,
   adventure: 0,
+  light: 0,
 };
 
-export type Field = 'hunger' | 'budget' | 'adventure';
+export type Field = 'hunger' | 'light' | 'budget' | 'adventure';
 
 type Snapshot = { session: Session; dish: Dish };
 

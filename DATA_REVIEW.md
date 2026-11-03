@@ -1,6 +1,6 @@
 # Data review
 
-All 81 dishes in `src/data/dishes.ts` were written from general knowledge, with no sources checked. Richness, heat, size, price and familiarity are judgment calls. These are the ones most worth checking.
+All 122 dishes in `src/data/dishes.ts` were written from general knowledge, with no sources checked. Richness, heat, size, price and familiarity are judgment calls. These are the ones most worth checking.
 
 ## Dietary tags: please check these first
 
@@ -32,7 +32,8 @@ The `contains` tags decide what people with allergies and diets get shown, so th
 - **Fish:** includes fish sauce and dashi. Inari Sushi, Bibimbap (kimchi) and Red Red (often cooked with smoked fish) are cautious tags, so vegans won't see them.
 - **Mustard** isn't tracked. It isn't a major US allergen, but it is elsewhere.
 - **Halal-friendly:** covers pork and alcohol only, and says nothing about how meat was slaughtered.
-- **New dishes** (Aloo Gobi, Rajma Chawal, Pho Chay, Mujaddara, Imam Bayildi, Gigantes Plaki, Tacos de Papa, Guacamole with Totopos, Lobio, Vegetable Tagine, Acai Bowl, Ital Stew, Red Red, Solterito, Scallion Pancakes, Inari Sushi, Shiro): some kitchens use meat stock, dairy or fish-based dashi in these.
+- **Dishes added in the third round:** 41 more, including all Italian and American dishes. Their tags had a separate independent audit, noted in REVIEW_NOTES.md.
+- **Dishes added in the second round** (Aloo Gobi, Rajma Chawal, Pho Chay, Mujaddara, Imam Bayildi, Gigantes Plaki, Tacos de Papa, Guacamole with Totopos, Lobio, Vegetable Tagine, Acai Bowl, Ital Stew, Red Red, Solterito, Scallion Pancakes, Inari Sushi, Shiro): some kitchens use meat stock, dairy or fish-based dashi in these.
 
 ## Prices vary a lot by city
 

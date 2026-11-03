@@ -8,6 +8,7 @@ const WIDEN_AFTER_NOS = 3;
 
 const NOVELTY_TARGETS = [0.35, 0.6, 0.85];
 const TOP_POOL = 5;
+const LIGHT_MAX_RICHNESS = 3;
 const FINAL_PICKS = 3;
 
 function emptyConstraints(): Constraints {
@@ -30,7 +31,11 @@ export function createSession(
     seed,
     recentlyAccepted,
     rejected: new Set(),
-    constraints: emptyConstraints(),
+    // Keeping it light is a preference, so it's a soft limit the final pick can relax.
+    constraints:
+      settings.light === 1
+        ? { ...emptyConstraints(), maxRichness: LIGHT_MAX_RICHNESS }
+        : emptyConstraints(),
     consecutiveNos: 0,
     shown: 0,
   };

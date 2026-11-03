@@ -21,6 +21,14 @@ const QUESTIONS: { field: Field; title: string; options: RadioOption[] }[] = [
     ],
   },
   {
+    field: 'light',
+    title: 'Keep it light?',
+    options: [
+      { value: 1, label: 'Keep it light', hint: 'Less rich, less heavy' },
+      { value: 2, label: "Don't mind", hint: 'Anything goes' },
+    ],
+  },
+  {
     field: 'budget',
     title: 'Budget?',
     options: [
@@ -86,7 +94,7 @@ export function Setup({
           <RadioButtons
             label={question.title}
             options={question.options}
-            value={settings[question.field]}
+            value={settings[question.field] ?? 0}
             onChange={(value) => onAnswer(question.field, value)}
             onConfirm={(value) => {
               onAnswer(question.field, value);

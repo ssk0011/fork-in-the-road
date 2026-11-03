@@ -83,6 +83,21 @@ describe('hard filters', () => {
   });
 });
 
+describe('keep it light', () => {
+  it('drops rich dishes as a soft limit the final pick can relax', () => {
+    const light = session({ ...createSession({ ...settings, light: 1 }, [], 1) });
+    const dishes = [dish('rich', { richness: 4 }), dish('lighter', { richness: 3 })];
+    expect(ids(candidates(light, dishes))).toEqual(['lighter']);
+    expect(ids(candidates(light, [dishes[0]!]))).toEqual([]);
+    expect(ids(finalPicks(light, [dishes[0]!]))).toEqual(['rich']);
+  });
+
+  it('changes nothing when there is no preference', () => {
+    const relaxed = createSession({ ...settings, light: 2 }, [], 1);
+    expect(relaxed.constraints.maxRichness).toBeUndefined();
+  });
+});
+
 describe('dietary restrictions', () => {
   const pork = dish('pork', { contains: ['pork'] });
   const egg = dish('egg', { contains: ['egg'] });

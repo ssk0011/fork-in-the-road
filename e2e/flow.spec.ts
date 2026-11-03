@@ -4,6 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 async function answerQuestions(page: Page) {
   await page.getByRole('button', { name: 'Nothing to avoid' }).click();
   await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
+  await page.getByRole('radio', { name: /Don't mind/ }).click();
   await page.getByRole('radio', { name: /^\$\$\$/ }).click();
   await page.getByRole('radio', { name: /Fresh territory/ }).click();
 }
@@ -122,7 +123,7 @@ test('a double tap answers only one question', async ({ page }) => {
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('button', { name: 'Nothing to avoid' }).click();
   await page.getByRole('radio', { name: 'Hungry', exact: true }).dblclick();
-  await expect(page.getByRole('heading', { name: 'Budget?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Keep it light?' })).toBeVisible();
 });
 
 test('actions stay on screen at 320 by 568', async ({ page }) => {
@@ -143,6 +144,7 @@ test('a restriction removes dishes and shows the check-with-restaurant note', as
   await expect(page.getByText('Recipes vary').first()).toBeVisible();
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
+  await page.getByRole('radio', { name: /Don't mind/ }).click();
   await page.getByRole('radio', { name: /^\$\$\$/ }).click();
   await page.getByRole('radio', { name: /Fresh territory/ }).click();
   await expect(page.getByText('Recipes vary')).toBeVisible();
@@ -175,6 +177,10 @@ test('the whole flow works from the keyboard', async ({ page }) => {
   await page.keyboard.press('Tab');
   await page.keyboard.press('ArrowDown');
   await expect(page.getByRole('radio', { name: 'Snacky' })).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByRole('heading', { name: 'Keep it light?' })).toBeVisible();
+  await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
 
   await expect(page.getByRole('heading', { name: 'Budget?' })).toBeVisible();

@@ -42,6 +42,7 @@ function parseSettings(value: unknown): Settings | null {
     hunger,
     budget,
     adventure,
+    light: inRange(value.light, 2) ? value.light : undefined,
   };
 }
 

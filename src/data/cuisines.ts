@@ -1,6 +1,9 @@
 export const MAX_TIRED = 4;
 
 export const CUISINES = [
+  // The most common ruts go first.
+  'American',
+  'Italian',
   'Indian',
   'Nepali/Tibetan',
   'Thai',
