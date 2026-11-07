@@ -228,7 +228,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Khao Soi',
       contains: ['poultry', 'egg', 'fish', 'shellfish', 'gluten', 'soy'],
-      notable: ['cilantro', 'coconut'],
+      notable: ['cilantro', 'coconut', 'raw-onion'],
       blurb: 'Coconut curry noodle soup topped with crispy fried noodles.',
       richness: 4,
       heat: 2,
@@ -288,7 +288,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Banh Mi',
       contains: ['pork', 'egg', 'fish', 'gluten', 'soy', 'shellfish', 'dairy'],
-      notable: ['cilantro'],
+      notable: ['cilantro', 'organ-meat'],
       blurb: 'A crackly baguette stuffed with savory meat, pickles and herbs.',
       richness: 2,
       heat: 1,
@@ -402,6 +402,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Sinigang',
       contains: ['pork', 'fish'],
+      notable: ['okra', 'eggplant'],
       blurb: 'A puckery tamarind soup with pork and vegetables.',
       richness: 2,
       heat: 1,
@@ -665,6 +666,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pkhali',
       contains: ['tree-nut'],
+      notable: ['cilantro'],
       blurb: 'Little balls of chopped greens bound with garlicky walnut paste.',
       richness: 2,
       heat: 0,
@@ -679,6 +681,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Lobio',
       contains: ['tree-nut'],
+      notable: ['cilantro'],
       blurb: 'Kidney beans stewed with herbs, garlic and ground walnuts.',
       richness: 3,
       heat: 1,
@@ -706,6 +709,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Khinkali',
       contains: ['beef', 'pork', 'gluten'],
+      notable: ['cilantro'],
       blurb: 'Big pleated dumplings full of spiced broth and meat.',
       richness: 3,
       heat: 1,
@@ -719,7 +723,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Badrijani Nigvzit',
       contains: ['tree-nut'],
-      notable: ['eggplant'],
+      notable: ['eggplant', 'cilantro'],
       blurb: 'Eggplant slices rolled around a garlicky walnut paste.',
       richness: 3,
       heat: 1,
@@ -890,6 +894,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Falafel Wrap',
       contains: ['gluten', 'sesame'],
+      notable: ['cilantro'],
       blurb: 'Crisp herby chickpea fritters in flatbread with tahini sauce.',
       richness: 3,
       heat: 1,
@@ -974,6 +979,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pork Souvlaki',
       contains: ['pork', 'dairy', 'gluten'],
+      notable: ['raw-onion'],
       blurb: 'Grilled pork skewers tucked into warm pita with tzatziki.',
       richness: 3,
       heat: 0,
@@ -1233,6 +1239,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Solterito',
       contains: ['dairy'],
+      notable: ['olives', 'raw-onion'],
       blurb: 'A bright bean, corn and fresh cheese salad with a little chili.',
       richness: 1,
       heat: 1,
@@ -1276,7 +1283,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Aji de Gallina',
       contains: ['poultry', 'dairy', 'gluten', 'tree-nut', 'egg', 'peanut'],
-      notable: ['cilantro'],
+      notable: ['cilantro', 'olives'],
       blurb: 'Shredded chicken in a creamy, gently hot yellow pepper sauce.',
       richness: 4,
       heat: 2,
@@ -1320,7 +1327,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Guacamole with Totopos',
       contains: [],
-      notable: ['cilantro'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'Mashed avocado with lime and chili, plus crisp corn chips.',
       richness: 3,
       heat: 1,
@@ -1392,6 +1399,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Picanha',
       contains: ['beef'],
+      notable: ['raw-onion'],
       blurb: 'Thick-cut beef with a cap of fat, salted and grilled.',
       richness: 4,
       heat: 0,
@@ -1951,7 +1959,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Kerala Sadya',
       subregion: 'Kerala',
       contains: ['dairy', 'tree-nut', 'gluten'],
-      notable: ['coconut'],
+      notable: ['coconut', 'okra', 'eggplant'],
       blurb: 'A vegetarian feast of rice and many small dishes on a banana leaf.',
       richness: 3,
       heat: 1,

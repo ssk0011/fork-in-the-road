@@ -19,6 +19,8 @@ A second audit covered the 41 dishes added in the third round. It found no wrong
 
 A third audit covered the Kerala dishes. It found 2 likely missing tags (gluten in Kerala Sadya, dairy in Appam with Chicken Stew) and no wrong ones. Both were applied, along with its search-name fix and two dishes it said were missing (Meen Moilee, Kappa and Meen Curry).
 
+A review of the notable-ingredient tags found 11 likely missing and 3 lower-confidence ones. All were applied, because a dislike filter should over-warn. Feijoada keeps its organ-meat tag for traditional versions.
+
 ## Fixed
 
 - Focus was lost after choosing a reason.
