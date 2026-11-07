@@ -3,6 +3,7 @@ import { DISHES } from '../data/dishes';
 import {
   contrastLine,
   MAX_PROPOSALS,
+  extraNotables,
   notableLabel,
   reasonsFor,
   type Dish,
@@ -66,7 +67,7 @@ function ReasonSheet({
               >
                 {capitalize(dish.mainIngredient)}
               </button>
-              {dish.notable.map((id) => (
+              {extraNotables(dish).map((id) => (
                 <button
                   key={id}
                   type="button"
@@ -91,7 +92,7 @@ function ReasonSheet({
                   type="button"
                   className="button button-reason"
                   onClick={() =>
-                    reason.id === 'ingredient' && dish.notable.length > 0
+                    reason.id === 'ingredient' && extraNotables(dish).length > 0
                       ? setPickingPart(true)
                       : onReason(reason.id)
                   }

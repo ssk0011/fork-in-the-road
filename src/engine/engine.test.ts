@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contrastLine } from './contrast';
 import { novelty, regionDistance } from './novelty';
-import { dislikedIn } from './notables';
+import { dislikedIn, extraNotables } from './notables';
 import { applyReason, reasonsFor } from './reasons';
 import {
   candidates,
@@ -109,6 +109,16 @@ describe('disliked ingredients', () => {
     expect(ids(candidates(current, [mushroomy, plain]))).toEqual(['plain']);
     expect(ids(finalPicks(current, [mushroomy]))).toEqual(['mushroomy']);
     expect(dislikedIn(mushroomy, current)).toEqual(['mushrooms']);
+  });
+
+  it('never asks about an ingredient twice', () => {
+    const chirashi = dish('chirashi', { mainIngredient: 'raw fish', notable: ['raw-fish'] });
+    expect(extraNotables(chirashi)).toEqual([]);
+    const tomYum = dish('tom-yum', {
+      mainIngredient: 'shrimp',
+      notable: ['mushrooms', 'cilantro'],
+    });
+    expect(extraNotables(tomYum)).toEqual(['mushrooms', 'cilantro']);
   });
 
   it('a no for one part avoids that part, not the main ingredient', () => {

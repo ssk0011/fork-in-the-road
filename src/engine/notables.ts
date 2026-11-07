@@ -17,6 +17,13 @@ export function notableLabel(id: string): string {
   return NOTABLES.find((item) => item.id === id)?.label ?? id;
 }
 
+// Notable ingredients worth asking about beyond the main one, so Chirashi doesn't
+// offer "Raw fish" twice.
+export function extraNotables(dish: Dish): Notable[] {
+  const main = dish.mainIngredient.toLowerCase();
+  return dish.notable.filter((id) => notableLabel(id).toLowerCase() !== main);
+}
+
 // Disliked ingredients this dish still has. Only the final pick can show one.
 export function dislikedIn(dish: Dish, session: Session): string[] {
   return dish.notable.filter((id) => session.constraints.avoidedNotables.includes(id));
