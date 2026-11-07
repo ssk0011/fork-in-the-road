@@ -15,7 +15,7 @@ const LABELS: Record<ReasonId, string> = {
 
 const MAX_REASONS = 6;
 
-// Listed in priority order. Two slots always go to the closing reasons.
+// Listed in priority order. The ingredient reason and the two closing reasons always show.
 export function reasonsFor(dish: Dish): Reason[] {
   const specific: ReasonId[] = [];
   if (dish.richness >= 3) specific.push('too-heavy');
@@ -23,10 +23,9 @@ export function reasonsFor(dish: Dish): Reason[] {
   if (dish.heat >= 2) specific.push('too-spicy');
   if (dish.price >= 2) specific.push('too-pricey');
   if (dish.familiarity <= 3) specific.push('too-unfamiliar');
-  specific.push('ingredient');
 
-  const closing: ReasonId[] = ['too-similar', 'not-feeling'];
-  return [...specific.slice(0, MAX_REASONS - closing.length), ...closing].map((id) => ({
+  const always: ReasonId[] = ['ingredient', 'too-similar', 'not-feeling'];
+  return [...specific.slice(0, MAX_REASONS - always.length), ...always].map((id) => ({
     id,
     label: LABELS[id],
   }));
@@ -36,7 +35,12 @@ function tighten(current: number | undefined, next: number, pick: typeof Math.mi
   return current === undefined ? next : pick(current, next);
 }
 
-function addConstraint(constraints: Constraints, dish: Dish, reason: ReasonId): Constraints {
+function addConstraint(
+  constraints: Constraints,
+  dish: Dish,
+  reason: ReasonId,
+  notable?: string,
+): Constraints {
   switch (reason) {
     case 'too-heavy':
       return {
@@ -55,6 +59,9 @@ function addConstraint(constraints: Constraints, dish: Dish, reason: ReasonId): 
         minFamiliarity: tighten(constraints.minFamiliarity, dish.familiarity + 1, Math.max),
       };
     case 'ingredient':
+      if (notable) {
+        return { ...constraints, avoidedNotables: [...constraints.avoidedNotables, notable] };
+      }
       return {
         ...constraints,
         excludedIngredients: [...constraints.excludedIngredients, dish.mainIngredient],
@@ -74,11 +81,17 @@ function addConstraint(constraints: Constraints, dish: Dish, reason: ReasonId): 
   }
 }
 
-export function applyReason(session: Session, dish: Dish, reason: ReasonId): Session {
+// For the ingredient reason, `notable` says which part of the dish put them off.
+export function applyReason(
+  session: Session,
+  dish: Dish,
+  reason: ReasonId,
+  notable?: string,
+): Session {
   return {
     ...session,
     rejected: new Set([...session.rejected, dish.id]),
-    constraints: addConstraint(session.constraints, dish, reason),
+    constraints: addConstraint(session.constraints, dish, reason, notable),
     consecutiveNos: session.consecutiveNos + 1,
   };
 }

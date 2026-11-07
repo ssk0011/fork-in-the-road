@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { contrastLine } from '../engine/contrast';
+import { NOTABLES } from '../engine/notables';
 import { fitsRestrictions, RESTRICTIONS } from '../engine/restrictions';
 import { applyReason, reasonsFor } from '../engine/reasons';
 import { candidates, createSession, finalPicks, proposeNext } from '../engine/select';
@@ -171,6 +172,25 @@ describe('dish data', () => {
           throw new Error(`No light dish for ${id} / ${hunger}`);
         }
       }
+    }
+  });
+
+  it('uses only known notable ingredients, without repeats', () => {
+    const known: readonly string[] = NOTABLES.map((item) => item.id);
+    for (const dish of DISHES) {
+      expect(new Set(dish.notable).size).toBe(dish.notable.length);
+      for (const id of dish.notable) expect(known).toContain(id);
+    }
+  });
+
+  it('flags the ingredients people ask about', () => {
+    const tomYum = DISHES.find((dish) => dish.name === 'Tom Yum')!;
+    expect(tomYum.notable).toContain('mushrooms');
+    for (const dish of DISHES.filter((item) => item.mainIngredient === 'raw fish')) {
+      expect(dish.notable, dish.name).toContain('raw-fish');
+    }
+    for (const dish of DISHES.filter((item) => item.mainIngredient === 'eggplant')) {
+      expect(dish.notable, dish.name).toContain('eggplant');
     }
   });
 

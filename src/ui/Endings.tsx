@@ -7,12 +7,14 @@ export function YesScreen({
   dish,
   storageFailed,
   restricted,
+  dislikeNote,
   onBack,
   onStartOver,
 }: {
   dish: Dish;
   storageFailed: boolean;
   restricted: boolean;
+  dislikeNote: string | null;
   onBack: () => void;
   onStartOver: () => void;
 }) {
@@ -25,6 +27,7 @@ export function YesScreen({
           <ScreenHeading className="dish-name">{dish.name}</ScreenHeading>
           <p className="dish-origin">{origin(dish)}</p>
           <p className="dish-blurb">{dish.blurb}</p>
+          {dislikeNote && <p className="check-note">{dislikeNote}</p>}
           {restricted && <p className="check-note">{CHECK_WITH_RESTAURANT}</p>}
           {storageFailed && (
             <p className="hint">This browser is blocking storage, so this pick won't be saved.</p>
@@ -59,12 +62,14 @@ export function YesScreen({
 export function FinalPick({
   picks,
   restricted,
+  noteFor,
   onPick,
   onBack,
   onStartOver,
 }: {
   picks: Dish[];
   restricted: boolean;
+  noteFor: (dish: Dish) => string | null;
   onPick: (dish: Dish) => void;
   onBack: () => void;
   onStartOver: () => void;
@@ -87,6 +92,7 @@ export function FinalPick({
                     <span className="pick-name">{dish.name}</span>
                     <span className="pick-origin">{origin(dish)}</span>
                     <span className="pick-blurb">{dish.blurb}</span>
+                    {noteFor(dish) && <span className="pick-note">{noteFor(dish)}</span>}
                   </button>
                 </li>
               ))}

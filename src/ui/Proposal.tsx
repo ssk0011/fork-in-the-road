@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DISHES } from '../data/dishes';
 import {
   contrastLine,
   MAX_PROPOSALS,
+  notableLabel,
   reasonsFor,
   type Dish,
   type ReasonId,
@@ -10,6 +11,10 @@ import {
 } from '../engine';
 import { Header, RoadProgress, ScreenHeading } from './components';
 import { attributeChips, CHECK_WITH_RESTAURANT, counterLine, dishProgress, origin } from './copy';
+
+function capitalize(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
 
 function ReasonSheet({
   dish,
@@ -20,9 +25,15 @@ function ReasonSheet({
   dish: Dish;
   open: boolean;
   onClose: () => void;
-  onReason: (reason: ReasonId) => void;
+  onReason: (reason: ReasonId, notable?: string) => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const firstPart = useRef<HTMLButtonElement>(null);
+  const [pickingPart, setPickingPart] = useState(false);
+
+  useEffect(() => {
+    if (pickingPart) firstPart.current?.focus();
+  }, [pickingPart]);
 
   // showModal gives us the focus trap, Escape and an inert page behind the sheet.
   useEffect(() => {
@@ -43,19 +54,54 @@ function ReasonSheet({
       }}
     >
       <div className="sheet-body">
-        <h2 id="sheet-title">Fair enough. What put you off?</h2>
-        <div className="sheet-reasons">
-          {reasonsFor(dish).map((reason) => (
-            <button
-              key={reason.id}
-              type="button"
-              className="button button-reason"
-              onClick={() => onReason(reason.id)}
-            >
-              {reason.label}
+        {pickingPart ? (
+          <>
+            <h2 id="sheet-title">Which part?</h2>
+            <div className="sheet-reasons">
+              <button
+                ref={firstPart}
+                type="button"
+                className="button button-reason"
+                onClick={() => onReason('ingredient')}
+              >
+                {capitalize(dish.mainIngredient)}
+              </button>
+              {dish.notable.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  className="button button-reason"
+                  onClick={() => onReason('ingredient', id)}
+                >
+                  {notableLabel(id)}
+                </button>
+              ))}
+            </div>
+            <button type="button" className="text-button" onClick={() => setPickingPart(false)}>
+              Other reasons
             </button>
-          ))}
-        </div>
+          </>
+        ) : (
+          <>
+            <h2 id="sheet-title">Fair enough. What put you off?</h2>
+            <div className="sheet-reasons">
+              {reasonsFor(dish).map((reason) => (
+                <button
+                  key={reason.id}
+                  type="button"
+                  className="button button-reason"
+                  onClick={() =>
+                    reason.id === 'ingredient' && dish.notable.length > 0
+                      ? setPickingPart(true)
+                      : onReason(reason.id)
+                  }
+                >
+                  {reason.label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
         <button type="button" className="text-button" onClick={onClose}>
           Actually, go back
         </button>
@@ -81,7 +127,7 @@ export function Proposal({
   onYes: () => void;
   onNo: () => void;
   onCloseSheet: () => void;
-  onReason: (reason: ReasonId) => void;
+  onReason: (reason: ReasonId, notable?: string) => void;
   onBack: () => void;
   onStartOver: () => void;
 }) {

@@ -155,6 +155,43 @@ test('a restriction removes dishes and shows the check-with-restaurant note', as
   await expect(page.getByText('Recipes vary')).toBeVisible();
 });
 
+test('a disliked ingredient is saved with the settings', async ({ page }) => {
+  await page.goto('./');
+  await page.getByRole('button', { name: 'Thai', exact: true }).click();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Mushrooms' }).click();
+  await expect(page.getByRole('button', { name: 'Mushrooms' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('radio', { name: 'Hungry', exact: true }).click();
+  await page.getByRole('radio', { name: /Don't mind/ }).click();
+  await page.getByRole('radio', { name: /^\$\$\$/ }).click();
+  await page.getByRole('radio', { name: /Fresh territory/ }).click();
+  await expect(page.getByText('Dish 1 of 5.')).toBeVisible();
+  const raw = await page.evaluate(() => localStorage.getItem('fork-in-the-road'));
+  expect(JSON.parse(raw ?? '{}').settings.dislikes).toEqual(['mushrooms']);
+});
+
+test('the ingredient reason asks which part when a dish has notable ingredients', async ({
+  page,
+}) => {
+  await answerSetup(page);
+  for (let count = 0; count < 5; count += 1) {
+    await page.getByRole('button', { name: 'Not this' }).click();
+    await page.getByRole('button', { name: 'Not into the main ingredient or texture' }).click();
+    const which = page.getByRole('heading', { name: 'Which part?' });
+    if (await which.isVisible()) {
+      await expect(page.getByRole('button', { name: 'Other reasons' })).toBeVisible();
+      await page.getByRole('dialog').getByRole('button').nth(1).click();
+      return;
+    }
+    await expect(page.getByText(/Dish \d of 5\.|stop making you work/)).toBeVisible();
+    if (await page.getByText("Okay, I'll stop making you work for it.").isVisible()) return;
+  }
+});
+
 test('survives corrupt saved data', async ({ page }) => {
   await page.goto('./');
   await page.evaluate(() => localStorage.setItem('fork-in-the-road', '{broken'));

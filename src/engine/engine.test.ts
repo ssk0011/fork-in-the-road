@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contrastLine } from './contrast';
 import { novelty, regionDistance } from './novelty';
+import { dislikedIn } from './notables';
 import { applyReason, reasonsFor } from './reasons';
 import {
   candidates,
@@ -30,6 +31,7 @@ function dish(id: string, overrides: Partial<Dish> = {}): Dish {
     texture: 'tender',
     searchName: id,
     contains: [],
+    notable: [],
     ...overrides,
   };
 }
@@ -98,6 +100,26 @@ describe('keep it light', () => {
   });
 });
 
+describe('disliked ingredients', () => {
+  const mushroomy = dish('mushroomy', { notable: ['mushrooms'] });
+  const plain = dish('plain');
+
+  it('hides dishes with a setup dislike, but the final pick can relax it', () => {
+    const current = createSession({ ...settings, dislikes: ['mushrooms'] }, [], 1);
+    expect(ids(candidates(current, [mushroomy, plain]))).toEqual(['plain']);
+    expect(ids(finalPicks(current, [mushroomy]))).toEqual(['mushroomy']);
+    expect(dislikedIn(mushroomy, current)).toEqual(['mushrooms']);
+  });
+
+  it('a no for one part avoids that part, not the main ingredient', () => {
+    const shown = dish('shown', { mainIngredient: 'shrimp', notable: ['mushrooms'] });
+    const shrimp = dish('shrimp', { mainIngredient: 'shrimp' });
+    const next = applyReason(session(), shown, 'ingredient', 'mushrooms');
+    expect(ids(candidates(next, [mushroomy, shrimp]))).toEqual(['shrimp']);
+    expect(ids(candidates(applyReason(session(), shown, 'ingredient'), [shrimp]))).toEqual([]);
+  });
+});
+
 describe('dietary restrictions', () => {
   const pork = dish('pork', { contains: ['pork'] });
   const egg = dish('egg', { contains: ['egg'] });
@@ -133,12 +155,12 @@ describe('reasons', () => {
   it('caps the list at 6 and always keeps the closing reasons', () => {
     const reasons = reasonsFor(heavy).map((reason) => reason.id);
     expect(reasons).toHaveLength(6);
-    expect(reasons.slice(-2)).toEqual(['too-similar', 'not-feeling']);
+    expect(reasons.slice(-3)).toEqual(['ingredient', 'too-similar', 'not-feeling']);
     expect(reasons).toEqual([
       'too-heavy',
       'not-filling',
       'too-spicy',
-      'too-pricey',
+      'ingredient',
       'too-similar',
       'not-feeling',
     ]);

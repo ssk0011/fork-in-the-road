@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useReducer, useRef, useState, type MouseEvent } from 'react';
 import { DISHES } from '../data/dishes';
-import { finalPicks, type Dish } from '../engine';
+import { dislikedIn, finalPicks, type Dish } from '../engine';
 import {
   clearStore,
   forgetAccepted,
@@ -10,7 +10,7 @@ import {
   saveSettings,
 } from '../storage/storage';
 import { appReducer, initialState, type AppState } from './appReducer';
-import { dishProgress, questionProgress } from './copy';
+import { dishProgress, dislikeNote, questionProgress } from './copy';
 import { FinalPick, YesScreen } from './Endings';
 import { Proposal } from './Proposal';
 import { Setup } from './Setup';
@@ -87,6 +87,7 @@ export function App() {
             hasSavedData={loadStore().settings !== null}
             onToggleTired={(cuisine) => dispatch({ type: 'toggle-tired', cuisine })}
             onToggleRestriction={(id) => dispatch({ type: 'toggle-restriction', id })}
+            onToggleDislike={(id) => dispatch({ type: 'toggle-dislike', id })}
             onAnswer={(field, value) => dispatch({ type: 'answer', field, value })}
             onNext={() => dispatch({ type: 'next-step' })}
             onStart={(settings) => {
@@ -106,7 +107,7 @@ export function App() {
             onYes={() => state.dish && accept(state.dish)}
             onNo={() => dispatch({ type: 'open-sheet' })}
             onCloseSheet={() => dispatch({ type: 'close-sheet' })}
-            onReason={(reason) => dispatch({ type: 'reject', reason })}
+            onReason={(reason, notable) => dispatch({ type: 'reject', reason, notable })}
             onBack={back}
             onStartOver={startOver}
           />
@@ -116,6 +117,7 @@ export function App() {
             dish={state.dish}
             storageFailed={storageFailed}
             restricted={state.settings.restrictions.length > 0}
+            dislikeNote={state.session && dislikeNote(dislikedIn(state.dish, state.session))}
             onBack={() => state.dish && backFromYes(state.dish)}
             onStartOver={startOver}
           />
@@ -124,6 +126,7 @@ export function App() {
           <FinalPick
             picks={finalPicks(state.session, DISHES)}
             restricted={state.settings.restrictions.length > 0}
+            noteFor={(dish) => state.session && dislikeNote(dislikedIn(dish, state.session))}
             onPick={accept}
             onBack={back}
             onStartOver={startOver}

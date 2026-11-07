@@ -42,6 +42,19 @@ export type ContainsTag =
   | 'soy'
   | 'alcohol';
 
+// Ingredients people often dislike. Unlike allergens these are soft preferences.
+export type Notable =
+  | 'mushrooms'
+  | 'cilantro'
+  | 'olives'
+  | 'eggplant'
+  | 'coconut'
+  | 'okra'
+  | 'raw-fish'
+  | 'organ-meat'
+  | 'raw-onion'
+  | 'blue-cheese';
+
 export type Dish = {
   id: string;
   name: string;
@@ -58,12 +71,14 @@ export type Dish = {
   texture: Texture;
   searchName: string;
   contains: ContainsTag[];
+  notable: Notable[];
   subregion?: string; // e.g. Kerala, shown next to the cuisine
 };
 
 export type Settings = {
   tired: string[];
   restrictions: string[];
+  dislikes?: string[];
   hunger: number; // 1-5
   budget: number; // 1-3
   adventure: number; // 1-3
@@ -88,6 +103,7 @@ export type Constraints = {
   minFamiliarity?: number;
   excludedIngredients: string[];
   excludedFormats: string[];
+  avoidedNotables: string[];
   penalizedTextures: string[];
   penalizedCuisines: string[];
   noveltyBoost: number;

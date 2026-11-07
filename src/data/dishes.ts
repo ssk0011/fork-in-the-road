@@ -1,6 +1,9 @@
 import type { Dish, Region } from '../engine/types';
 
-type Row = Omit<Dish, 'id' | 'cuisine' | 'region' | 'searchName'> & { searchName?: string };
+type Row = Omit<Dish, 'id' | 'cuisine' | 'region' | 'searchName' | 'notable'> & {
+  searchName?: string;
+  notable?: Dish['notable'];
+};
 
 function slug(text: string): string {
   return text
@@ -17,6 +20,7 @@ function group(cuisine: string, region: Region, rows: Row[]): Dish[] {
     cuisine,
     region,
     searchName: row.searchName ?? row.name,
+    notable: row.notable ?? [],
   }));
 }
 
@@ -25,6 +29,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Chana Chaat',
       contains: ['dairy', 'gluten'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'A tangy chickpea salad with onion, tomato, lime and chaat spice.',
       richness: 1,
       heat: 2,
@@ -38,6 +43,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Aloo Gobi',
       contains: ['dairy'],
+      notable: ['cilantro'],
       blurb: 'Potatoes and cauliflower cooked dry with turmeric and cumin.',
       richness: 2,
       heat: 2,
@@ -64,6 +70,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Masala Dosa',
       contains: ['dairy', 'sesame'],
+      notable: ['coconut'],
       blurb: 'A huge crisp rice crepe wrapped around spiced potatoes.',
       richness: 3,
       heat: 2,
@@ -77,6 +84,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Chana Masala',
       contains: ['dairy'],
+      notable: ['cilantro'],
       blurb: 'Chickpeas simmered in a tangy, spiced tomato gravy.',
       richness: 3,
       heat: 2,
@@ -90,6 +98,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Butter Chicken',
       contains: ['poultry', 'dairy', 'tree-nut'],
+      notable: ['cilantro'],
       blurb: 'Tender chicken in a mild, creamy tomato sauce.',
       richness: 5,
       heat: 1,
@@ -103,6 +112,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pani Puri',
       contains: ['gluten'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'Hollow crisp shells you fill with spiced water and eat in one bite.',
       richness: 1,
       heat: 2,
@@ -118,6 +128,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Momo',
       contains: ['poultry', 'gluten', 'soy', 'sesame'],
+      notable: ['cilantro'],
       blurb: 'Plump steamed dumplings served with a bright tomato chutney.',
       richness: 2,
       heat: 2,
@@ -132,6 +143,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Thukpa',
       contains: ['poultry', 'gluten', 'soy'],
+      notable: ['mushrooms', 'cilantro'],
       blurb: 'A warming noodle soup with vegetables and gentle spice.',
       richness: 2,
       heat: 1,
@@ -160,6 +172,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Tom Yum',
       contains: ['shellfish', 'fish', 'dairy'],
+      notable: ['mushrooms', 'cilantro'],
       blurb: 'A hot-and-sour lemongrass soup with shrimp and mushrooms.',
       richness: 1,
       heat: 3,
@@ -173,6 +186,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Larb',
       contains: ['pork', 'fish'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'Minced pork tossed with lime, chili, mint and toasted rice.',
       richness: 2,
       heat: 3,
@@ -187,6 +201,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Som Tam',
       contains: ['fish', 'shellfish', 'peanut'],
+      notable: ['cilantro'],
       blurb: 'Shredded green papaya pounded with lime, chili and peanuts.',
       richness: 1,
       heat: 4,
@@ -213,6 +228,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Khao Soi',
       contains: ['poultry', 'egg', 'fish', 'shellfish', 'gluten', 'soy'],
+      notable: ['cilantro', 'coconut'],
       blurb: 'Coconut curry noodle soup topped with crispy fried noodles.',
       richness: 4,
       heat: 2,
@@ -228,6 +244,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Bun Cha',
       contains: ['pork', 'fish', 'shellfish'],
+      notable: ['cilantro'],
       blurb: 'Grilled pork patties with cold rice noodles, herbs and dipping sauce.',
       richness: 3,
       heat: 1,
@@ -241,6 +258,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pho Chay',
       contains: ['soy', 'gluten', 'sesame'],
+      notable: ['mushrooms', 'cilantro'],
       blurb: 'Rice noodles and vegetables in a clear, star anise-scented broth.',
       richness: 1,
       heat: 0,
@@ -255,6 +273,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Goi Cuon',
       contains: ['shellfish', 'pork', 'fish', 'peanut', 'soy', 'sesame', 'gluten'],
+      notable: ['cilantro'],
       blurb: 'Soft rice paper rolls of shrimp, herbs and noodles, served cool.',
       richness: 1,
       heat: 0,
@@ -269,6 +288,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Banh Mi',
       contains: ['pork', 'egg', 'fish', 'gluten', 'soy', 'shellfish', 'dairy'],
+      notable: ['cilantro'],
       blurb: 'A crackly baguette stuffed with savory meat, pickles and herbs.',
       richness: 2,
       heat: 1,
@@ -282,6 +302,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Bun Bo Hue',
       contains: ['beef', 'pork', 'fish', 'shellfish'],
+      notable: ['cilantro', 'organ-meat'],
       blurb: 'A spicy, lemongrass-scented beef soup with thick round noodles.',
       richness: 3,
       heat: 3,
@@ -323,6 +344,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Beef Rendang',
       contains: ['beef', 'shellfish'],
+      notable: ['coconut'],
       blurb: 'Beef slow-cooked in coconut and spices until nearly dry and deep.',
       richness: 5,
       heat: 3,
@@ -338,6 +360,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pancit Canton',
       contains: ['pork', 'shellfish', 'poultry', 'soy', 'gluten', 'egg', 'fish'],
+      notable: ['mushrooms'],
       blurb: 'Stir-fried egg noodles with pork, shrimp and vegetables.',
       richness: 3,
       heat: 0,
@@ -541,6 +564,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Chirashi',
       contains: ['fish', 'shellfish', 'egg', 'gluten', 'alcohol', 'soy', 'sesame'],
+      notable: ['raw-fish'],
       blurb: 'A bowl of seasoned rice scattered with slices of raw fish.',
       richness: 2,
       heat: 0,
@@ -554,6 +578,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Tonkotsu Ramen',
       contains: ['pork', 'egg', 'fish', 'gluten', 'alcohol', 'soy', 'sesame'],
+      notable: ['mushrooms'],
       blurb: 'Noodles in a silky, long-simmered pork broth.',
       richness: 5,
       heat: 1,
@@ -569,6 +594,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Japchae',
       contains: ['beef', 'soy', 'sesame', 'gluten', 'egg'],
+      notable: ['mushrooms'],
       blurb: 'Chewy glass noodles stir-fried with vegetables, beef and sesame.',
       richness: 3,
       heat: 0,
@@ -595,6 +621,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Bibimbap',
       contains: ['beef', 'egg', 'gluten', 'soy', 'sesame', 'fish', 'shellfish', 'alcohol'],
+      notable: ['mushrooms'],
       blurb: 'Rice topped with vegetables, egg and chili paste, mixed at the table.',
       richness: 2,
       heat: 2,
@@ -608,6 +635,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Sundubu Jjigae',
       contains: ['pork', 'shellfish', 'egg', 'fish', 'gluten', 'soy', 'sesame', 'beef'],
+      notable: ['mushrooms'],
       blurb: 'A bubbling, spicy stew of very soft tofu.',
       richness: 2,
       heat: 3,
@@ -691,6 +719,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Badrijani Nigvzit',
       contains: ['tree-nut'],
+      notable: ['eggplant'],
       blurb: 'Eggplant slices rolled around a garlicky walnut paste.',
       richness: 3,
       heat: 1,
@@ -721,6 +750,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Ezme',
       contains: ['tree-nut'],
+      notable: ['raw-onion'],
       blurb: 'A finely chopped, spicy salad of tomato, pepper and herbs.',
       richness: 1,
       heat: 3,
@@ -735,6 +765,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Imam Bayildi',
       contains: [],
+      notable: ['eggplant'],
       blurb: 'Whole eggplant stuffed with onions and tomato, baked in olive oil.',
       richness: 3,
       heat: 0,
@@ -748,6 +779,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Lahmacun',
       contains: ['meat', 'gluten'],
+      notable: ['raw-onion'],
       blurb: 'Thin flatbread with spiced minced lamb, rolled up with herbs and lemon.',
       richness: 2,
       heat: 1,
@@ -817,6 +849,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Tabbouleh',
       contains: ['gluten'],
+      notable: ['raw-onion'],
       blurb: 'A bright parsley salad with bulgur, tomato, lemon and mint.',
       richness: 1,
       heat: 0,
@@ -843,6 +876,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Fattoush',
       contains: ['gluten', 'sesame'],
+      notable: ['raw-onion'],
       blurb: 'A lemony chopped salad with shards of toasted pita.',
       richness: 1,
       heat: 0,
@@ -925,6 +959,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Horiatiki',
       contains: ['dairy'],
+      notable: ['olives', 'raw-onion'],
       blurb: 'Tomato, cucumber, olives and a slab of feta, no lettuce involved.',
       richness: 2,
       heat: 0,
@@ -952,6 +987,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Moussaka',
       contains: ['beef', 'meat', 'dairy', 'egg', 'gluten', 'alcohol'],
+      notable: ['eggplant'],
       blurb: 'Baked layers of eggplant, spiced meat and thick creamy topping.',
       richness: 5,
       heat: 0,
@@ -1050,6 +1086,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Zaalouk',
       contains: [],
+      notable: ['cilantro', 'eggplant'],
       blurb: 'A smoky cooked salad of eggplant, tomato and garlic.',
       richness: 2,
       heat: 1,
@@ -1064,6 +1101,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Vegetable Tagine',
       contains: ['sesame', 'tree-nut', 'gluten'],
+      notable: ['cilantro'],
       blurb: 'Squash, carrots and chickpeas slow-cooked with warm spices.',
       richness: 2,
       heat: 1,
@@ -1078,6 +1116,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Harira',
       contains: ['meat', 'gluten', 'sesame', 'egg', 'dairy'],
+      notable: ['cilantro'],
       blurb: 'A tomato, lentil and chickpea soup with warm spice.',
       richness: 2,
       heat: 1,
@@ -1091,6 +1130,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Chicken Tagine',
       contains: ['poultry', 'sesame', 'gluten', 'dairy'],
+      notable: ['cilantro', 'olives'],
       blurb: 'Chicken stewed slowly with preserved lemon and olives.',
       richness: 3,
       heat: 1,
@@ -1148,6 +1188,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Suya',
       contains: ['beef', 'peanut', 'soy', 'gluten'],
+      notable: ['raw-onion'],
       blurb: 'Thin beef skewers rubbed in a spicy peanut mix and grilled.',
       richness: 3,
       heat: 3,
@@ -1177,6 +1218,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Anticuchos',
       contains: ['beef'],
+      notable: ['organ-meat'],
       blurb: 'Grilled skewers of marinated beef heart with a chili glaze.',
       richness: 3,
       heat: 2,
@@ -1205,6 +1247,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Ceviche',
       contains: ['fish', 'shellfish'],
+      notable: ['cilantro', 'raw-fish', 'raw-onion'],
       blurb: 'Raw fish cured in lime with chili, onion and sweet potato.',
       richness: 1,
       heat: 2,
@@ -1219,6 +1262,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Lomo Saltado',
       contains: ['beef', 'gluten', 'alcohol', 'soy'],
+      notable: ['cilantro'],
       blurb: 'Beef stir-fried with onions and tomatoes, served with fries and rice.',
       richness: 4,
       heat: 1,
@@ -1232,6 +1276,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Aji de Gallina',
       contains: ['poultry', 'dairy', 'gluten', 'tree-nut', 'egg', 'peanut'],
+      notable: ['cilantro'],
       blurb: 'Shredded chicken in a creamy, gently hot yellow pepper sauce.',
       richness: 4,
       heat: 2,
@@ -1247,6 +1292,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Cochinita Pibil',
       contains: ['pork'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'Pork slow-roasted in citrus and achiote until it falls apart.',
       richness: 3,
       heat: 1,
@@ -1260,6 +1306,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Tacos de Papa',
       contains: ['dairy'],
+      notable: ['cilantro'],
       blurb: 'Corn tortillas folded around potato and fried until crisp.',
       richness: 3,
       heat: 1,
@@ -1273,6 +1320,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Guacamole with Totopos',
       contains: [],
+      notable: ['cilantro'],
       blurb: 'Mashed avocado with lime and chili, plus crisp corn chips.',
       richness: 3,
       heat: 1,
@@ -1287,6 +1335,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Tacos al Pastor',
       contains: ['pork'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'Pork marinated in chilies and shaved onto tortillas with pineapple.',
       richness: 3,
       heat: 2,
@@ -1300,6 +1349,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pozole Rojo',
       contains: ['pork'],
+      notable: ['cilantro', 'raw-onion'],
       blurb: 'A brick-red pork and hominy soup with crunchy garnishes.',
       richness: 3,
       heat: 2,
@@ -1313,6 +1363,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Esquites',
       contains: ['dairy', 'egg'],
+      notable: ['cilantro'],
       blurb: 'Warm corn in a cup with lime, chili, cheese and a little mayo.',
       richness: 3,
       heat: 1,
@@ -1382,6 +1433,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Moqueca',
       contains: ['fish', 'shellfish'],
+      notable: ['cilantro', 'coconut'],
       blurb: 'Fish stewed gently in coconut milk, tomato and peppers.',
       richness: 3,
       heat: 1,
@@ -1396,6 +1448,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Feijoada',
       contains: ['pork', 'beef'],
+      notable: ['organ-meat'],
       blurb: 'A long-simmered black bean and pork stew, served with rice and greens.',
       richness: 5,
       heat: 0,
@@ -1425,6 +1478,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Ital Stew',
       contains: [],
+      notable: ['coconut'],
       blurb: 'Pumpkin, beans and vegetables simmered in coconut milk.',
       richness: 3,
       heat: 1,
@@ -1465,6 +1519,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Rice and Peas with Oxtail',
       contains: ['beef', 'soy', 'gluten'],
+      notable: ['coconut'],
       blurb: 'Fall-apart braised oxtail with coconut rice and kidney beans.',
       richness: 5,
       heat: 1,
@@ -1534,6 +1589,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Caponata',
       contains: ['tree-nut'],
+      notable: ['olives', 'eggplant'],
       blurb: 'Sweet and sour Sicilian eggplant stew with olives and capers.',
       richness: 2,
       heat: 0,
@@ -1548,6 +1604,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Panzanella',
       contains: ['gluten'],
+      notable: ['raw-onion'],
       blurb: 'A summer salad of ripe tomatoes and torn, dressed bread.',
       richness: 1,
       heat: 0,
@@ -1561,6 +1618,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Pasta alla Norma',
       contains: ['gluten', 'dairy'],
+      notable: ['eggplant'],
       blurb: 'Pasta with fried eggplant, tomato sauce and salted ricotta.',
       richness: 3,
       heat: 0,
@@ -1576,6 +1634,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Gumbo',
       contains: ['pork', 'shellfish', 'poultry', 'gluten', 'fish'],
+      notable: ['okra'],
       blurb: 'A dark roux stew with sausage, shrimp and okra, served over rice.',
       richness: 4,
       heat: 2,
@@ -1604,6 +1663,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Shrimp and Grits',
       contains: ['shellfish', 'dairy', 'pork', 'gluten', 'fish', 'alcohol'],
+      notable: ['mushrooms'],
       blurb: 'Buttery stone-ground grits under shrimp, bacon and a savory gravy.',
       richness: 4,
       heat: 1,
@@ -1630,6 +1690,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Poke Bowl',
       contains: ['fish', 'soy', 'sesame', 'gluten', 'egg', 'shellfish', 'tree-nut'],
+      notable: ['raw-fish', 'raw-onion'],
       blurb: 'Cubes of raw tuna in soy and sesame over rice.',
       richness: 2,
       heat: 1,
@@ -1656,6 +1717,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Cobb Salad',
       contains: ['poultry', 'pork', 'egg', 'dairy', 'fish'],
+      notable: ['blue-cheese'],
       blurb: 'Chopped chicken, bacon, egg, avocado and blue cheese.',
       richness: 3,
       heat: 0,
@@ -1669,6 +1731,7 @@ export const DISHES: readonly Dish[] = [
     {
       name: 'Cincinnati Chili',
       contains: ['beef', 'gluten', 'dairy', 'fish'],
+      notable: ['raw-onion'],
       blurb: 'Spaghetti under a cinnamon-spiced meat sauce and a heap of cheese.',
       richness: 4,
       heat: 1,
@@ -1700,6 +1763,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Meen Moilee',
       subregion: 'Kerala',
       contains: ['fish', 'tree-nut'],
+      notable: ['coconut'],
       blurb: 'A gentle fish curry in coconut milk with ginger, green chili and turmeric.',
       richness: 3,
       heat: 1,
@@ -1715,6 +1779,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Kappa and Meen Curry',
       subregion: 'Kerala',
       contains: ['fish'],
+      notable: ['coconut'],
       blurb: 'Mashed tapioca with a hot, sour Kerala fish curry on the side.',
       richness: 3,
       heat: 3,
@@ -1730,6 +1795,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Appam with Chicken Stew',
       subregion: 'Kerala',
       contains: ['poultry', 'tree-nut', 'dairy'],
+      notable: ['coconut'],
       blurb: 'Lacy rice pancakes with a mild, peppery chicken stew in coconut milk.',
       richness: 3,
       heat: 1,
@@ -1775,6 +1841,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Kerala Beef Fry',
       subregion: 'Kerala',
       contains: ['beef'],
+      notable: ['coconut'],
       blurb: 'Beef slow-roasted with black pepper, curry leaves and coconut slivers.',
       richness: 4,
       heat: 3,
@@ -1805,6 +1872,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Puttu and Kadala Curry',
       subregion: 'Kerala',
       contains: [],
+      notable: ['coconut'],
       blurb: 'Steamed rice and coconut cylinders with a black chickpea curry.',
       richness: 2,
       heat: 2,
@@ -1820,6 +1888,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Idiyappam with Egg Curry',
       subregion: 'Kerala',
       contains: ['egg'],
+      notable: ['coconut'],
       blurb: 'Soft nests of rice noodles with eggs in a coconut gravy.',
       richness: 2,
       heat: 2,
@@ -1835,6 +1904,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Thalassery Biryani',
       subregion: 'Kerala',
       contains: ['poultry', 'dairy', 'tree-nut'],
+      notable: ['cilantro'],
       blurb: 'A fragrant Malabar chicken biryani made with short-grain rice.',
       richness: 4,
       heat: 2,
@@ -1865,6 +1935,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Avial',
       subregion: 'Kerala',
       contains: ['dairy'],
+      notable: ['coconut'],
       blurb: 'Mixed vegetables in a coconut and yogurt sauce with curry leaves.',
       richness: 2,
       heat: 1,
@@ -1880,6 +1951,7 @@ export const DISHES: readonly Dish[] = [
       name: 'Kerala Sadya',
       subregion: 'Kerala',
       contains: ['dairy', 'tree-nut', 'gluten'],
+      notable: ['coconut'],
       blurb: 'A vegetarian feast of rice and many small dishes on a banana leaf.',
       richness: 3,
       heat: 1,

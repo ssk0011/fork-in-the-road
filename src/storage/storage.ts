@@ -1,5 +1,5 @@
 import { CUISINES, MAX_TIRED } from '../data/cuisines';
-import { RESTRICTIONS, type Settings } from '../engine';
+import { NOTABLES, RESTRICTIONS, type Settings } from '../engine';
 
 const KEY = 'fork-in-the-road';
 const VERSION = 1;
@@ -27,6 +27,12 @@ function inRange(value: unknown, max: number): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= max;
 }
 
+function knownOnly(value: unknown, known: readonly { id: string }[]): string[] {
+  const ids: readonly string[] = known.map((item) => item.id);
+  const saved: unknown[] = Array.isArray(value) ? value : [];
+  return [...new Set(saved.filter((item): item is string => ids.includes(item as string)))];
+}
+
 function parseSettings(value: unknown): Settings | null {
   if (!isRecord(value) || !Array.isArray(value.tired)) return null;
   const { hunger, budget, adventure } = value;
@@ -39,6 +45,7 @@ function parseSettings(value: unknown): Settings | null {
   return {
     tired: [...new Set(tired)].slice(0, MAX_TIRED),
     restrictions: [...new Set(restrictions)],
+    dislikes: knownOnly(value.dislikes, NOTABLES),
     hunger,
     budget,
     adventure,

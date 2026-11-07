@@ -15,6 +15,7 @@ export const SETUP_STEPS = 6;
 const DEFAULT_SETTINGS: Settings = {
   tired: [],
   restrictions: [],
+  dislikes: [],
   hunger: 0,
   budget: 0,
   adventure: 0,
@@ -39,12 +40,13 @@ export type AppState = {
 export type Action =
   | { type: 'toggle-tired'; cuisine: string }
   | { type: 'toggle-restriction'; id: string }
+  | { type: 'toggle-dislike'; id: string }
   | { type: 'answer'; field: Field; value: number }
   | { type: 'next-step' }
   | { type: 'start'; recentlyAccepted: string[]; seed: number }
   | { type: 'open-sheet' }
   | { type: 'close-sheet' }
-  | { type: 'reject'; reason: ReasonId }
+  | { type: 'reject'; reason: ReasonId; notable?: string }
   | { type: 'accept'; dish: Dish }
   | { type: 'back' }
   | { type: 'start-over' }
@@ -111,6 +113,13 @@ export function appReducer(state: AppState, action: Action): AppState {
         : [...restrictions, action.id];
       return { ...state, settings: { ...state.settings, restrictions: next } };
     }
+    case 'toggle-dislike': {
+      const dislikes = state.settings.dislikes ?? [];
+      const next = dislikes.includes(action.id)
+        ? dislikes.filter((id) => id !== action.id)
+        : [...dislikes, action.id];
+      return { ...state, settings: { ...state.settings, dislikes: next } };
+    }
     case 'answer':
       return {
         ...state,
@@ -129,7 +138,7 @@ export function appReducer(state: AppState, action: Action): AppState {
     case 'reject': {
       if (!state.session || !state.dish) return state;
       const history = [...state.history, { session: state.session, dish: state.dish }];
-      const session = applyReason(state.session, state.dish, action.reason);
+      const session = applyReason(state.session, state.dish, action.reason, action.notable);
       return propose({ ...state, history }, session);
     }
     case 'accept':

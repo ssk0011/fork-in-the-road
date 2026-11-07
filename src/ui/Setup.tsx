@@ -1,4 +1,4 @@
-import { RESTRICTIONS } from '../engine';
+import { NOTABLES, RESTRICTIONS } from '../engine';
 import { CUISINES } from '../data/cuisines';
 import type { Settings } from '../engine';
 import { MAX_TIRED } from '../data/cuisines';
@@ -55,6 +55,7 @@ export function Setup({
   hasSavedData,
   onToggleTired,
   onToggleRestriction,
+  onToggleDislike,
   onAnswer,
   onNext,
   onStart,
@@ -68,6 +69,7 @@ export function Setup({
   hasSavedData: boolean;
   onToggleTired: (cuisine: string) => void;
   onToggleRestriction: (id: string) => void;
+  onToggleDislike: (id: string) => void;
   onAnswer: (field: Field, value: number) => void;
   onNext: () => void;
   onStart: (settings: Settings) => void;
@@ -77,6 +79,7 @@ export function Setup({
 }) {
   const question = QUESTIONS[step - FIRST_ONE_TAP_STEP];
   const atLimit = settings.tired.length >= MAX_TIRED;
+  const dislikes = settings.dislikes ?? [];
 
   return (
     <>
@@ -123,9 +126,24 @@ export function Setup({
           {settings.restrictions.length > 0 && (
             <p className="check-note">{CHECK_WITH_RESTAURANT}</p>
           )}
+          <h2 className="subquestion">Rather skip?</h2>
+          <p className="hint">Not allergies, just things you'd rather not have today.</p>
+          <div className="chips" role="group" aria-label="Ingredients you'd rather skip">
+            {NOTABLES.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="chip"
+                aria-pressed={dislikes.includes(item.id)}
+                onClick={() => onToggleDislike(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
           <div className="actions">
             <button type="button" className="button button-primary" onClick={onNext}>
-              {settings.restrictions.length > 0 ? 'Next' : 'Nothing to avoid'}
+              {settings.restrictions.length + dislikes.length > 0 ? 'Next' : 'Nothing to avoid'}
             </button>
           </div>
         </main>

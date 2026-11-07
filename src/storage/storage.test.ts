@@ -18,7 +18,14 @@ function fakeStorage(): Storage {
   } as Storage;
 }
 
-const settings = { tired: ['Thai'], restrictions: ['vegan'], hunger: 3, budget: 2, adventure: 1 };
+const settings = {
+  tired: ['Thai'],
+  restrictions: ['vegan'],
+  dislikes: [],
+  hunger: 3,
+  budget: 2,
+  adventure: 1,
+};
 const DAY = 24 * 60 * 60 * 1000;
 
 describe('parseStore', () => {
@@ -61,6 +68,18 @@ describe('parseStore', () => {
       settings: { ...older, restrictions: ['vegan', 'nope', 'vegan', 4] },
     });
     expect(parseStore(raw).settings?.restrictions).toEqual(['vegan']);
+  });
+
+  it('keeps known dislikes and drops the rest', () => {
+    const older = { tired: ['Thai'], hunger: 1, budget: 1, adventure: 1 };
+    const raw = JSON.stringify({
+      version: 1,
+      settings: { ...older, dislikes: ['mushrooms', 'gravel', 'mushrooms'] },
+    });
+    expect(parseStore(raw).settings?.dislikes).toEqual(['mushrooms']);
+    expect(parseStore(JSON.stringify({ version: 1, settings: older })).settings?.dislikes).toEqual(
+      [],
+    );
   });
 
   it('keeps only well-formed accepted entries', () => {

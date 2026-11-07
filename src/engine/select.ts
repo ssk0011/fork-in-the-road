@@ -15,6 +15,7 @@ function emptyConstraints(): Constraints {
   return {
     excludedIngredients: [],
     excludedFormats: [],
+    avoidedNotables: [],
     penalizedTextures: [],
     penalizedCuisines: [],
     noveltyBoost: 0,
@@ -32,10 +33,11 @@ export function createSession(
     recentlyAccepted,
     rejected: new Set(),
     // Keeping it light is a preference, so it's a soft limit the final pick can relax.
-    constraints:
-      settings.light === 1
-        ? { ...emptyConstraints(), maxRichness: LIGHT_MAX_RICHNESS }
-        : emptyConstraints(),
+    constraints: {
+      ...emptyConstraints(),
+      maxRichness: settings.light === 1 ? LIGHT_MAX_RICHNESS : undefined,
+      avoidedNotables: settings.dislikes ?? [],
+    },
     consecutiveNos: 0,
     shown: 0,
   };
@@ -81,6 +83,7 @@ function softViolations(dish: Dish, session: Session): number {
     c.minFamiliarity !== undefined && dish.familiarity < c.minFamiliarity,
     c.excludedIngredients.includes(dish.mainIngredient),
     c.excludedFormats.includes(dish.format),
+    dish.notable.some((id) => c.avoidedNotables.includes(id)),
   ];
   return broken.filter(Boolean).length;
 }

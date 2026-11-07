@@ -35,6 +35,10 @@ The `contains` tags decide what people with allergies and diets get shown, so th
 - **Dishes added in the third round:** 41 more, including all Italian and American dishes. Their tags had a separate independent audit, noted in REVIEW_NOTES.md.
 - **Dishes added in the second round** (Aloo Gobi, Rajma Chawal, Pho Chay, Mujaddara, Imam Bayildi, Gigantes Plaki, Tacos de Papa, Guacamole with Totopos, Lobio, Vegetable Tagine, Acai Bowl, Ital Stew, Red Red, Solterito, Scallion Pancakes, Inari Sushi, Shiro): some kitchens use meat stock, dairy or fish-based dashi in these.
 
+## Notable ingredients
+
+Each dish lists commonly disliked ingredients it usually has, from a fixed list of 10. These are lower stakes than allergens, so they're a best guess rather than cautious. Cilantro as a garnish and raw onion on the side are the most likely to vary by restaurant.
+
 ## Kerala dishes
 
 These 14 dishes were added as a regional test, and their tags had their own independent audit.
