@@ -1,6 +1,6 @@
 # Data review
 
-All 122 dishes in `src/data/dishes.ts` were written from general knowledge, with no sources checked. Richness, heat, size, price and familiarity are judgment calls. These are the ones most worth checking.
+All 134 dishes in `src/data/dishes.ts` were written from general knowledge, with no sources checked. Richness, heat, size, price and familiarity are judgment calls. These are the ones most worth checking.
 
 ## Dietary tags: please check these first
 
@@ -34,6 +34,16 @@ The `contains` tags decide what people with allergies and diets get shown, so th
 - **Halal-friendly:** covers pork and alcohol only, and says nothing about how meat was slaughtered.
 - **Dishes added in the third round:** 41 more, including all Italian and American dishes. Their tags had a separate independent audit, noted in REVIEW_NOTES.md.
 - **Dishes added in the second round** (Aloo Gobi, Rajma Chawal, Pho Chay, Mujaddara, Imam Bayildi, Gigantes Plaki, Tacos de Papa, Guacamole with Totopos, Lobio, Vegetable Tagine, Acai Bowl, Ital Stew, Red Red, Solterito, Scallion Pancakes, Inari Sushi, Shiro): some kitchens use meat stock, dairy or fish-based dashi in these.
+
+## Kerala dishes
+
+These 12 dishes were added as a regional test, and their tags had their own independent audit.
+
+- **Coconut:** used in almost all of them, but not tagged. Coconut isn't a peanut, and the US FDA no longer counts it as a tree nut. Some people with tree-nut allergies still avoid it, so it may be worth a tag of its own.
+- **Mustard seeds and curry leaves:** used throughout, and neither is tracked.
+- **Cooking oil:** Kerala food is cooked in coconut oil. Sesame (gingelly) oil appears in some dishes and isn't tagged.
+- **Kerala Sadya and Thalassery Biryani:** usually come with payasam or a fried-onion garnish, so they're tagged for cashews and ghee.
+- **Availability outside India:** dishes like Karimeen Pollichathu and Kerala Sadya may only be easy to find in cities with Malayali communities.
 
 ## Prices vary a lot by city
 

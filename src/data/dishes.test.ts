@@ -89,6 +89,7 @@ describe('dish data', () => {
     expect(dish.familiarity).toBeGreaterThanOrEqual(1);
     expect(dish.familiarity).toBeLessThanOrEqual(5);
     expect(dish.searchName.length).toBeGreaterThan(0);
+    if (dish.subregion !== undefined) expect(dish.subregion.length).toBeGreaterThan(0);
   });
 
   it('uses only known contains tags, without repeats', () => {

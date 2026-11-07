@@ -58,6 +58,7 @@ export type Dish = {
   texture: Texture;
   searchName: string;
   contains: ContainsTag[];
+  subregion?: string; // e.g. Kerala, shown next to the cuisine
 };
 
 export type Settings = {

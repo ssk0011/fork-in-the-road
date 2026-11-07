@@ -50,7 +50,8 @@ export function counterLine(shown: number, total: number): string {
 }
 
 export function origin(dish: Dish): string {
-  return `${dish.cuisine}, ${REGION_NAMES[dish.region]}`;
+  const cuisine = dish.subregion ? `${dish.cuisine} (${dish.subregion})` : dish.cuisine;
+  return `${cuisine}, ${REGION_NAMES[dish.region]}`;
 }
 
 export function attributeChips(dish: Dish): string[] {
