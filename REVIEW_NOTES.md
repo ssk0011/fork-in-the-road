@@ -17,6 +17,8 @@ An independent subagent audited all 81 dishes for missing tags. It found no wron
 
 A second audit covered the 41 dishes added in the third round. It found no wrong tags and 20 likely missing ones, and all were applied.
 
+A third audit covered the Kerala dishes. It found 2 likely missing tags (gluten in Kerala Sadya, dairy in Appam with Chicken Stew) and no wrong ones. Both were applied, along with its search-name fix and two dishes it said were missing (Meen Moilee, Kappa and Meen Curry).
+
 ## Fixed
 
 - Focus was lost after choosing a reason.

@@ -2,7 +2,7 @@
 
 A decision helper for people who want to eat something new. Say what you're tired of, what you can't eat, how hungry you are, whether to keep it light, your budget and how adventurous you feel. It proposes one dish at a time, learns from each "no", and stops after five.
 
-Dish count: 134 across 22 cuisines, including 12 Kerala dishes as a test of regional depth. That's up from the brief's ~60, so vegans and people with allergies have enough to choose from. Italian and American were added because they're common ruts.
+Dish count: 136 across 22 cuisines, including 14 Kerala dishes as a test of regional depth. That's up from the brief's ~60, so vegans and people with allergies have enough to choose from. Italian and American were added because they're common ruts.
 
 Live site: https://ssk0011.github.io/fork-in-the-road/
 
